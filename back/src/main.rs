@@ -34,7 +34,7 @@ fn getallevent(conn:DbConn) -> Json<JsonApiResponse> {
             title: row.get(2),
             img: row.get(3)
           }
-        }).unwrap().map(|event| event.unwrap());//response to event
+        }).unwrap().map(|event| event.unwrap());//response
        for event in events {
          response.data.push(event);}
       Json(response)
