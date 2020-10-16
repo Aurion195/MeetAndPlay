@@ -10,43 +10,41 @@
 
 <div class="demo">
 	<Carousel on:change={changed} {...carousels}>
-                <script>
-		<span class="control" slot="left-control">
+		<span class="control" slot="left-control" display="flex">
 			<ChevronLeftIcon />
-                </span>
-        </script>
+        </span>
 		<div class="slide-content">
-                        <section>
-                                <img class="evenement" src="img/evenement1.jpg" width="600px" height="341px">
-                        </section>
+            <section>
+                <img class="evenement" src="img/evenement1.jpg" width="600px" height="341px">
+            </section>
 		</div>
 		<div class="slide-content">
 			<section>
-                                <img class="evenement" src="img/evenement2.jpg" width="600px" height="341px">
-                        </section>
+                <img class="evenement" src="img/evenement2.jpg" width="600px" height="341px">
+            </section>
 		</div>
 		<div class="slide-content">
 			<section>
-                                <img class="evenement" src="img/evenement3.jpg" width="600px" height="341px">
-                        </section>
+                <img class="evenement" src="img/evenement3.jpg" width="600px" height="341px">
+            </section>
 		</div>
 		<div class="slide-content">
 			<section>
-                                <img class="evenement" src="img/evenement4.jpg" width="600px" height="341px">
-                        </section>
-                </div>
-                <div class="slide-content">
+                <img class="evenement" src="img/evenement4.jpg" width="600px" height="341px">
+            </section>
+        </div>
+        <div class="slide-content">
 			<section>
-                                <img class="evenement" src="img/evenement5.jpg" width="600px" height="341px">
-                        </section>
-                </div>
-                <div class="slide-content">
+                <img class="evenement" src="img/evenement5.jpg" width="600px" height="341px">
+            </section>
+        </div>
+        <div class="slide-content">
 			<section>
-                                <img class="evenement" src="img/evenement6.jpg" width="600px" height="341px">
-                        </section>
-                </div>
+                <img class="evenement" src="img/evenement6.jpg" width="600px" height="341px">
+            </section>
+        </div>
 		<span class="control" slot="right-control">
-			<ChevronRightIcon />
+				<ChevronRightIcon />
 		</span>
         </Carousel>
         
@@ -55,9 +53,9 @@
                         const boxes = document.getElementsByClassName('evenement');
 
                         for(let i = 0 ; i < boxes.length ; i++) {
-                                boxes[i].width = 212
-                                boxes[i].height = 102
-                        }
+                                boxes[i].width = 212;
+                                boxes[i].height = 102;
+						}
                 }
         </script>
 	<br/>
@@ -65,9 +63,10 @@
 
 <style>
 	.demo {
-                margin: 0 auto;
+        margin: 0 auto;
 		height: 230px;
 		width: 80vw;
+		text-align: center;
 	}
 	
 	.control :global(svg) {
@@ -84,22 +83,32 @@
                 height: 500px;
                 width: auto;
                 background-color: white;
-        }
+    }
         
         @media(max-width:700px) {
                 .demo {
-                        margin: 10px;
-		        height: 112px;
-		        width: 60vw;
+                    margin-top: 10px;
+		        	height: 110px;
+		        	width: auto;
+					text-align: center;
                 }
-                
-                .control :global(svg) {
-		width: 100%;
-		height: 100%;
-		color: #333;
-		border: 2px solid #333;
-		border-radius: 32px;
-	}
+
+				.control :global(svg) {
+					width: 100%;
+					height: 100%;
+					color: #333;
+					border: 2px solid #333;
+					border-radius: 32px;
+					display: none;
+				}
+	
+				.slide-content {
+					display: flex;
+					flex-direction: column;
+					height: auto;
+					width: auto;
+					background-color: white;
+				}
         }
 </style>
 
