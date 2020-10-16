@@ -46,69 +46,36 @@
 		<span class="control" slot="right-control">
 				<ChevronRightIcon />
 		</span>
-        </Carousel>
-        
-        <script>
-                if(screen.width < 700) {
-                        const boxes = document.getElementsByClassName('evenement');
-
-                        for(let i = 0 ; i < boxes.length ; i++) {
-                                boxes[i].width = 212;
-                                boxes[i].height = 102;
-						}
-                }
-        </script>
+		
+    </Carousel>
 	<br/>
+
+	<div class="button">
+		<a class="waves-effect waves-light btn">Plus d'information</a>
+	</div>
 </div>
 
 <style>
 	.demo {
         margin: 0 auto;
+		margin-top: 1%;
 		height: 230px;
 		width: 80vw;
 		text-align: center;
 	}
 	
 	.control :global(svg) {
-		width: 100%;
-		height: 100%;
+		width: auto;
+		height: auto;
 		color: #333;
 		border: 2px solid #333;
 		border-radius: 32px;
 	}
 	
 	.slide-content {
-		display: flex;
+		display: inline;
 		flex-direction: column;
-                height: 500px;
-                width: auto;
-                background-color: white;
+        background-color: white;
     }
-        
-        @media(max-width:700px) {
-                .demo {
-                    margin-top: 10px;
-		        	height: 110px;
-		        	width: auto;
-					text-align: center;
-                }
-
-				.control :global(svg) {
-					width: 100%;
-					height: 100%;
-					color: #333;
-					border: 2px solid #333;
-					border-radius: 32px;
-					display: none;
-				}
-	
-				.slide-content {
-					display: flex;
-					flex-direction: column;
-					height: auto;
-					width: auto;
-					background-color: white;
-				}
-        }
 </style>
 
