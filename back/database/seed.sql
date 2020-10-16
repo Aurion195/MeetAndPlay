@@ -1,0 +1,1 @@
+INSERT INTO events(link,title,img,description) VALUES("linkstotheevent","The event","https://upload.wikimedia.org/wikipedia/commons/1/14/The_Event_2010_Intertitle.svg","my first event")
