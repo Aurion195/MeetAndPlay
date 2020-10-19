@@ -16,32 +16,32 @@
         </span>
 		<div class="slide-content">
             <section>
-                <img class="evenement" src="img/evenement1.jpg" width="600px" height="341px">
+                <img class="evenement" src="img/Evenement/evenement1.jpg" width="600px" height="341px">
             </section>
 		</div>
 		<div class="slide-content">
 			<section>
-                <img class="evenement" src="img/evenement2.jpg" width="600px" height="341px">
+                <img class="evenement" src="img/Evenement/evenement2.jpg" width="600px" height="341px">
             </section>
 		</div>
 		<div class="slide-content">
 			<section>
-                <img class="evenement" src="img/evenement3.jpg" width="600px" height="341px">
+                <img class="evenement" src="img/Evenement/evenement3.jpg" width="600px" height="341px">
             </section>
 		</div>
 		<div class="slide-content">
 			<section>
-                <img class="evenement" src="img/evenement4.jpg" width="600px" height="341px">
+                <img class="evenement" src="img/Evenement/evenement4.jpg" width="600px" height="341px">
             </section>
         </div>
         <div class="slide-content">
 			<section>
-                <img class="evenement" src="img/evenement5.jpg" width="600px" height="341px">
+                <img class="evenement" src="img/Evenement/evenement5.jpg" width="600px" height="341px">
             </section>
         </div>
         <div class="slide-content">
 			<section>
-                <img class="evenement" src="img/evenement6.jpg" width="600px" height="341px">
+                <img class="evenement" src="img/Evenement/evenement6.jpg" width="600px" height="341px">
             </section>
         </div>
 		<span class="control" slot="right-control">
