@@ -2,10 +2,10 @@
 	import Carousel from '@beyonk/svelte-carousel'
 	import { ChevronLeftIcon, ChevronRightIcon } from 'svelte-feather-icons'
 	let carousels = {perPage: 1}
-	
+	let continents
 	function changed (event) {
 		console.log(event.detail.currentSlide)
-        }
+    }
 </script>
 
 <section class="section event">
@@ -43,7 +43,7 @@
 			<section>
                 <img class="evenement" src="img/Evenement/evenement6.jpg" width="600px" height="341px">
             </section>
-        </div>
+		</div>
 		<span class="control" slot="right-control">
 				<ChevronRightIcon />
 		</span>
@@ -65,6 +65,8 @@
 		});
 	</script>
 </div>
+
+
 </section>
 
 <style>
