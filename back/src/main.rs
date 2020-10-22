@@ -31,10 +31,6 @@ struct JsonApiResponseByVec {
     data: Vec<Event>,
 }
 
-#[derive(Serialize)]
-struct JsonApiResponse{
-    data: Event,
-}
 
 pub struct CORS();
 
@@ -62,8 +58,8 @@ impl Fairing for CORS {
 }
 
 #[get("/geteventbyid/<id>")]
-fn geteventbyid(id: i32,conn:DbConn) -> Json<JsonApiResponse>  {
-  let mut response = JsonApiResponse {data: Event::default() };
+fn geteventbyid(id: i32,conn:DbConn) -> Json<Event>  {
+  let mut eventToSend = Event::default();
   let mut stmt = conn.prepare("SELECT id, link, title, img FROM events WHERE id=?").unwrap();
   let events = stmt.query_map(&[&id], |row|  {
           Event{
@@ -74,8 +70,8 @@ fn geteventbyid(id: i32,conn:DbConn) -> Json<JsonApiResponse>  {
           }
         }).unwrap().map(|event| event.unwrap());//response
        for event in events {
-         response.data=event;}
-      Json(response)
+         eventToSend=event;}
+      Json(eventToSend)
 }
 
 #[get("/getallevent")]
