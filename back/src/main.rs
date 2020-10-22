@@ -58,8 +58,8 @@ impl Fairing for CORS {
 }
 
 #[get("/geteventbyid/<id>")]
-fn geteventbyid(id: i32,conn:DbConn) -> Json<Event>  {
-  let mut eventToSend = Event::default();
+fn get_event_by_id(id: i32,conn:DbConn) -> Json<Event>  {
+  let mut event_to_send = Event::default();
   let mut stmt = conn.prepare("SELECT id, link, title, img FROM events WHERE id=?").unwrap();
   let events = stmt.query_map(&[&id], |row|  {
           Event{
@@ -70,12 +70,12 @@ fn geteventbyid(id: i32,conn:DbConn) -> Json<Event>  {
           }
         }).unwrap().map(|event| event.unwrap());//response
        for event in events {
-         eventToSend=event;}
-      Json(eventToSend)
+         event_to_send=event;}
+      Json(event_to_send)
 }
 
 #[get("/getallevent")]
-fn getallevent(conn:DbConn) -> Json<JsonApiResponseByVec> {
+fn get_all_event(conn:DbConn) -> Json<JsonApiResponseByVec> {
 
   let mut response = JsonApiResponseByVec {data: vec![], };
   let mut stmt = conn.prepare("SELECT id, link, title, img FROM events").unwrap();
@@ -96,6 +96,6 @@ fn main() {
     rocket::ignite()
     .attach(DbConn::fairing())
     .attach(CORS())
-    .mount("/", routes![getallevent,geteventbyid])
+    .mount("/", routes![get_all_event,get_event_by_id])
     .launch();
 }
