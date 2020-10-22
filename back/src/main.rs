@@ -19,12 +19,23 @@ struct Event {
     title: String,
     img: String
 }
+impl Default for Event {
+  fn default () -> Event {
+      Event { id: 0, link: " ".to_string(), title:" ".to_string(), img:" ".to_string()}
+  }
+}
+
 
 #[derive(Serialize)]
-struct JsonApiResponse {
-   
+struct JsonApiResponseByVec {
     data: Vec<Event>,
 }
+
+#[derive(Serialize)]
+struct JsonApiResponse{
+    data: Event,
+}
+
 pub struct CORS();
 
 impl Fairing for CORS {
@@ -52,7 +63,7 @@ impl Fairing for CORS {
 
 #[get("/geteventbyid/<id>")]
 fn geteventbyid(id: i32,conn:DbConn) -> Json<JsonApiResponse>  {
-  let mut response = JsonApiResponse {data: vec![], };
+  let mut response = JsonApiResponse {data: Event::default() };
   let mut stmt = conn.prepare("SELECT id, link, title, img FROM events WHERE id=?").unwrap();
   let events = stmt.query_map(&[&id], |row|  {
           Event{
@@ -63,14 +74,14 @@ fn geteventbyid(id: i32,conn:DbConn) -> Json<JsonApiResponse>  {
           }
         }).unwrap().map(|event| event.unwrap());//response
        for event in events {
-         response.data.push(event);}
+         response.data=event;}
       Json(response)
 }
 
 #[get("/getallevent")]
-fn getallevent(conn:DbConn) -> Json<JsonApiResponse> {
-  
-  let mut response = JsonApiResponse {data: vec![], };
+fn getallevent(conn:DbConn) -> Json<JsonApiResponseByVec> {
+
+  let mut response = JsonApiResponseByVec {data: vec![], };
   let mut stmt = conn.prepare("SELECT id, link, title, img FROM events").unwrap();
   let events = stmt.query_map(&[], |row|  {
           Event{
@@ -86,7 +97,6 @@ fn getallevent(conn:DbConn) -> Json<JsonApiResponse> {
 }
 
 fn main() {
-  
     rocket::ignite()
     .attach(DbConn::fairing())
     .attach(CORS())
