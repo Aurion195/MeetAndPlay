@@ -22,6 +22,22 @@ struct JsonApiResponse {
     data: Vec<Event>,
 }
 
+#[get("/geteventbyid/<id>")]
+fn geteventbyid(id: i32,conn:DbConn) -> Json<JsonApiResponse>  {
+  let mut response = JsonApiResponse { data: vec![], };
+  let mut stmt = conn.prepare("SELECT id, link, title, img FROM events WHERE id=?").unwrap();
+  let events = stmt.query_map(&[&id], |row|  {
+          Event{
+            id: row.get(0),
+            link: row.get(1),
+            title: row.get(2),
+            img: row.get(3)
+          }
+        }).unwrap().map(|event| event.unwrap());//response
+       for event in events {
+         response.data.push(event);}
+      Json(response)
+}
 
 #[get("/getallevent")]
 fn getallevent(conn:DbConn) -> Json<JsonApiResponse> {
@@ -43,6 +59,6 @@ fn getallevent(conn:DbConn) -> Json<JsonApiResponse> {
 fn main() {
     rocket::ignite()
     .attach(DbConn::fairing())
-    .mount("/", routes![getallevent])
+    .mount("/", routes![getallevent,geteventbyid])
     .launch();
 }

@@ -26,4 +26,4 @@ ENV ROCKET_PORT=8080
 # copy Rocket default settings (req to set Docker-compliant host)
 COPY ./Rocket.toml /home/back/Rocket.toml
 
-RUN cargo run
+CMD ["cargo", "run"]
