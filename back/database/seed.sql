@@ -1,1 +1,1 @@
-INSERT INTO events(link,title,img,description) VALUES("linkstotheevent","The event","https://upload.wikimedia.org/wikipedia/commons/1/14/The_Event_2010_Intertitle.svg","my first event")
+INSERT INTO events(link,title,img,description) VALUES("linkstotheevent","The event","https://infinitytoursusa.com/wp-content/uploads/2018/11/INFINITY_CORPORATE_DIVISION-600x341.png","my first event")
