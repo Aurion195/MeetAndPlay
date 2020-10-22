@@ -5,4 +5,4 @@ services:
     ports:
       - "8000:8080"
   redis:
-    image: "rust-debian"
+    image: "back_web"
