@@ -8,98 +8,97 @@
         }
 </script>
 
+<section class="section event">
 <div class="demo">
 	<Carousel on:change={changed} {...carousels}>
-                <script>
 		<span class="control" slot="left-control">
 			<ChevronLeftIcon />
-                </span>
-        </script>
+        </span>
 		<div class="slide-content">
-                        <section>
-                                <img class="evenement" src="img/evenement1.jpg" width="600px" height="341px">
-                        </section>
+            <section>
+                <img class="evenement" src="img/Evenement/evenement1.jpg" width="600px" height="341px">
+            </section>
 		</div>
 		<div class="slide-content">
 			<section>
-                                <img class="evenement" src="img/evenement2.jpg" width="600px" height="341px">
-                        </section>
+                <img class="evenement" src="img/Evenement/evenement2.jpg" width="600px" height="341px">
+            </section>
 		</div>
 		<div class="slide-content">
 			<section>
-                                <img class="evenement" src="img/evenement3.jpg" width="600px" height="341px">
-                        </section>
+                <img class="evenement" src="img/Evenement/evenement3.jpg" width="600px" height="341px">
+            </section>
 		</div>
 		<div class="slide-content">
 			<section>
-                                <img class="evenement" src="img/evenement4.jpg" width="600px" height="341px">
-                        </section>
-                </div>
-                <div class="slide-content">
+                <img class="evenement" src="img/Evenement/evenement4.jpg" width="600px" height="341px">
+            </section>
+        </div>
+        <div class="slide-content">
 			<section>
-                                <img class="evenement" src="img/evenement5.jpg" width="600px" height="341px">
-                        </section>
-                </div>
-                <div class="slide-content">
+                <img class="evenement" src="img/Evenement/evenement5.jpg" width="600px" height="341px">
+            </section>
+        </div>
+        <div class="slide-content">
 			<section>
-                                <img class="evenement" src="img/evenement6.jpg" width="600px" height="341px">
-                        </section>
-                </div>
+                <img class="evenement" src="img/Evenement/evenement6.jpg" width="600px" height="341px">
+            </section>
+        </div>
 		<span class="control" slot="right-control">
-			<ChevronRightIcon />
+				<ChevronRightIcon />
 		</span>
-        </Carousel>
-        
-        <script>
-                if(screen.width < 700) {
-                        const boxes = document.getElementsByClassName('evenement');
-
-                        for(let i = 0 ; i < boxes.length ; i++) {
-                                boxes[i].width = 212
-                                boxes[i].height = 102
-                        }
-                }
-        </script>
+		
+    </Carousel>
 	<br/>
+	<script>
+		window.addEventListener("resize", function () {
+			const fleche = document.querySelectorAll(".control");
+
+			fleche.forEach(element => {
+				element.style.display = (document.documentElement.clientWidth < 700 ? "none" : "block") ;
+			});
+			
+			const div = document.querySelector(".event") ;
+			const image = document.querySelector(".slide-content img");
+			const heigth = window.getComputedStyle(image).height;
+			div.style.height = heigth
+		});
+	</script>
 </div>
+</section>
 
 <style>
+	.event {
+		margin-bottom: 2%;
+	}
 	.demo {
-                margin: 0 auto;
-		height: 230px;
+        margin: 0 auto;
+		margin-top: 1%;
+		height: 341px;
 		width: 80vw;
+		text-align: center;
 	}
 	
 	.control :global(svg) {
-		width: 100%;
-		height: 100%;
+		width: auto;
+		height: auto;
 		color: #333;
 		border: 2px solid #333;
 		border-radius: 32px;
 	}
 	
 	.slide-content {
-		display: flex;
+		display: inline;
 		flex-direction: column;
-                height: 500px;
-                width: auto;
-                background-color: white;
-        }
-        
-        @media(max-width:700px) {
-                .demo {
-                        margin: 10px;
-		        height: 112px;
-		        width: 60vw;
-                }
-                
-                .control :global(svg) {
+        background-color: white;
+    }
+
+	.slide-content img {
 		width: 100%;
-		height: 100%;
-		color: #333;
-		border: 2px solid #333;
-		border-radius: 32px;
+		height: auto;
+		max-height: 341px;
+		max-width: 80vw;
+		object-fit: contain;
 	}
-        }
 </style>
 

@@ -1,35 +1,13 @@
 <script>
-	export let name;
 	import Navbar from "./Navbar.svelte"
 	import Carousel from "./CarouselEvenement.svelte"
+import ButtonEvent from "./ButtonEvent.svelte"
+import ProfilCard from "./ProfilCard.svelte"
 </script>
 
 <main>
 	<Navbar></Navbar>
 	<Carousel></Carousel>
-	<h1>Hello {name}!</h1>
-	
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<ButtonEvent></ButtonEvent>
+	<ProfilCard></ProfilCard>
 </main>
-
-<style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
-
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
-</style>
