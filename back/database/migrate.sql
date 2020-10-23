@@ -5,3 +5,11 @@ CREATE TABLE events (
         Img TEXT NOT NULL,
         description TEXT NOT NULL
 );
+CREATE TABLE Users (
+        id INTEGER PRIMARY KEY,
+        Pseudo TEXT NOT NULL,
+        Email  TEXT NOT NULL,
+        Style TEXT NOT NULL,
+        description TEXT NOT NULL
+);
+

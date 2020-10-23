@@ -31,9 +31,7 @@ struct JsonApiResponseByVec {
     data: Vec<Event>,
 }
 
-
 pub struct CORS();
-
 impl Fairing for CORS {
     fn info(&self) -> Info {
         Info {
@@ -60,7 +58,7 @@ impl Fairing for CORS {
 #[get("/geteventbyid/<id>")]
 fn get_event_by_id(id: i32,conn:DbConn) -> Json<Event>  {
   let mut event_to_send = Event::default();
-  let mut stmt = conn.prepare("SELECT id, link, title, img FROM events WHERE id=?").unwrap();
+  let mut stmt = conn.prepare("SELECT id, link, title, img, description FROM events WHERE id=?").unwrap();
   let events = stmt.query_map(&[&id], |row|  {
           Event{
             id: row.get(0),
@@ -69,16 +67,16 @@ fn get_event_by_id(id: i32,conn:DbConn) -> Json<Event>  {
             img: row.get(3)
           }
         }).unwrap().map(|event| event.unwrap());//response
-       for event in events {
-         event_to_send=event;}
-      Json(event_to_send)
+      for event in events {
+         event_to_send=event;
+        }
+  Json(event_to_send)
 }
 
 #[get("/getallevent")]
 fn get_all_event(conn:DbConn) -> Json<JsonApiResponseByVec> {
-
   let mut response = JsonApiResponseByVec {data: vec![], };
-  let mut stmt = conn.prepare("SELECT id, link, title, img FROM events").unwrap();
+  let mut stmt = conn.prepare("SELECT id, link, title, img, description FROM events").unwrap();
   let events = stmt.query_map(&[], |row|  {
           Event{
             id: row.get(0),
@@ -87,9 +85,9 @@ fn get_all_event(conn:DbConn) -> Json<JsonApiResponseByVec> {
             img: row.get(3)
           }
         }).unwrap().map(|event| event.unwrap());//response
-       for event in events {
+      for event in events {
          response.data.push(event);}
-      Json(response)
+  Json(response)
 }
 
 fn main() {
