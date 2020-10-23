@@ -1,10 +1,10 @@
 from flask import Flask, make_response, jsonify, request
 import os
 import dataset
-
+from flask_cors import CORS
 app = Flask(__name__)
 db = dataset.connect('sqlite:///../database/database.sqlite')
-
+cors = CORS(app)
 
 eventsTable = db['events']
 
