@@ -1,73 +1,68 @@
 <script>
+	import { onMount } from "svelte";
 	import Carousel from '@beyonk/svelte-carousel'
 	import { ChevronLeftIcon, ChevronRightIcon } from 'svelte-feather-icons'
+
 	let carousels = {perPage: 1}
-	let continents
 	function changed (event) {
 		console.log(event.detail.currentSlide)
-    }
+	}
+	
+	/*onMount((async () => {
+		const response = await fetch('http://localhost:8000/getallevent')
+		const event = await response.json()
+		continents = [... event.data]
+		console.log(continents)
+	  })) ;*/
+
+	const fetchImage = (async () => {
+		const response = await fetch('http://localhost:8000/getallevent')
+		const event = await response.json()
+		return  [... event.data]
+	})()
 </script>
 
+
 <section class="section event">
-<div class="demo">
-	<Carousel on:change={changed} {...carousels}>
-		<span class="control" slot="left-control">
-			<ChevronLeftIcon />
-        </span>
-		<div class="slide-content">
-            <section>
-                <img class="evenement" src="img/Evenement/evenement1.jpg" width="600px" height="341px">
-            </section>
-		</div>
-		<div class="slide-content">
-			<section>
-                <img class="evenement" src="img/Evenement/evenement2.jpg" width="600px" height="341px">
-            </section>
-		</div>
-		<div class="slide-content">
-			<section>
-                <img class="evenement" src="img/Evenement/evenement3.jpg" width="600px" height="341px">
-            </section>
-		</div>
-		<div class="slide-content">
-			<section>
-                <img class="evenement" src="img/Evenement/evenement4.jpg" width="600px" height="341px">
-            </section>
-        </div>
-        <div class="slide-content">
-			<section>
-                <img class="evenement" src="img/Evenement/evenement5.jpg" width="600px" height="341px">
-            </section>
-        </div>
-        <div class="slide-content">
-			<section>
-                <img class="evenement" src="img/Evenement/evenement6.jpg" width="600px" height="341px">
-            </section>
-		</div>
-		<span class="control" slot="right-control">
-				<ChevronRightIcon />
-		</span>
-		
-    </Carousel>
-	<br/>
-	<script>
-		window.addEventListener("resize", function () {
-			const fleche = document.querySelectorAll(".control");
+	{#await fetchImage}
+	{:then continents}
+	<div class="demo">
+		<Carousel on:change={changed} {...carousels}>		
+			<span class="control" slot="left-control">
+				<ChevronLeftIcon />
+			</span>
 
-			fleche.forEach(element => {
-				element.style.display = (document.documentElement.clientWidth < 700 ? "none" : "block") ;
+			{#each continents as data}
+				<div class="slide-content">
+            		<section>
+                		<img class="evenement" src={data.img} width="600px" height="341px">
+					</section>
+				</div>
+			{/each}
+
+			<span class="control" slot="right-control">
+					<ChevronRightIcon />
+			</span>
+		</Carousel>
+		<br/>
+		<script>
+			window.addEventListener("resize", function () {
+				const fleche = document.querySelectorAll(".control");
+
+				fleche.forEach(element => {
+					element.style.display = (document.documentElement.clientWidth < 700 ? "none" : "block") ;
+				});
+				
+				const div = document.querySelector(".event") ;
+				const image = document.querySelector(".slide-content img");
+				const heigth = window.getComputedStyle(image).height;
+				div.style.height = heigth
 			});
-			
-			const div = document.querySelector(".event") ;
-			const image = document.querySelector(".slide-content img");
-			const heigth = window.getComputedStyle(image).height;
-			div.style.height = heigth
-		});
-	</script>
+		</script>
 </div>
-
-
+{/await}
 </section>
+
 
 <style>
 	.event {
