@@ -1,0 +1,40 @@
+from flask import Flask, make_response, jsonify, request
+import os
+import dataset
+
+app = Flask(__name__)
+db = dataset.connect('sqlite:///../database/database.sqlite')
+
+
+eventsTable = db['events']
+
+
+def fetch_db(event_id):  # Each book scnerio
+    return eventsTable.find_one(id=event_id)
+
+
+def fetch_db_all():
+    events = []
+    for event in eventsTable:
+        events.append(event)
+    return events
+
+
+@app.route('/getallevent', methods=['GET'])
+def api_events():
+    if request.method == "GET":
+        return make_response(jsonify(fetch_db_all()), 200)
+
+@app.route('/geteventbyid/<event_id>', methods=['GET'])
+def api_each_event(event_id):
+    print(event_id)
+    if request.method == "GET":
+        event_obj = fetch_db(event_id)
+        if event_obj:
+            return make_response(jsonify(event_obj), 200)
+        else:
+            return make_response(jsonify(event_obj), 404)
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=os.getenv('PORT'))
