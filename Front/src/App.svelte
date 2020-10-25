@@ -1,17 +1,19 @@
 <script>
 	import { Router, Link, Route } from "svelte-routing";
-	import Navbar from "./Navbar.svelte"
-	import ButtonEvent from "./ButtonEvent.svelte"
-	import ProfilCard from "./ProfilCard.svelte"
-	import CarouselEvenement from "./CarouselEvenement.svelte";
+	import Navbar from "./home/Navbar.svelte"
+	import ButtonEvent from "./home/ButtonEvent.svelte"
+	import ProfilCard from "./home/ProfilCard.svelte"
+	import CarouselEvenement from "./home/CarouselEvenement.svelte";
+	import CarouselEvenementDetail from "./DetailsEvenement/CarouselEvenementDetail.svelte";
+	import NavbarBack from "./home/NavbarBack.svelte";
 
 	export let url = ''
 </script>
 
-<main>
 <Router url="{url}">
-  <div>
-	<Route path="eventDetails" component="{Navbar}">
+	<Route path="/eventDetails" >
+		<NavbarBack />
+		<CarouselEvenementDetail />
 	</Route>
 	
 	<Route path="/">
@@ -20,7 +22,4 @@
 		<ButtonEvent />
 		<ProfilCard />
 	</Route>
-  </div>
 </Router>
-
-</main>
