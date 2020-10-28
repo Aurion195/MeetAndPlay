@@ -38,3 +38,22 @@ VALUES(
         "Le second event"  ,
         "https://www.labellevilloise.com/wp-content/uploads/2019/10/namethumb_w600px_img_event_9b8ab4d2-7b06-4ce2-aeca-2b78af033522-600x341.jpg" 
         );
+
+
+INSERT INTO Users(
+        prenom ,
+        age ,
+        jeu_favoris,
+        activité_recente,
+        nombre_victoire ,
+        note ,
+        niveau)
+VALUES(
+        "random" ,
+        "26" ,
+        "belote",
+        "event3" ,
+        0 ,
+        3 ,
+        'noob'
+        );

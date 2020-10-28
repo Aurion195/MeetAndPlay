@@ -13,11 +13,19 @@ CREATE TABLE events (
 
 CREATE TABLE Users (
         id INTEGER PRIMARY KEY,
-        Pseudo TEXT NOT NULL,
-        Email  TEXT NOT NULL,
-        Style TEXT NOT NULL,
-        Description TEXT NOT NULL,
-        Avatar TEXT NOT NULL,
-        Password TEXT
+        prenom TEXT NOT NULL,
+        age INTEGER NOT NULL,
+        jeu_favoris TEXT NOT NULL,
+        activité_recente TEXT NOT NULL,
+        nombre_victoire INTEGER NOT NULL,
+        note INTEGER NOT NULL,
+        niveau INTEGER NOT NULL
+);
+
+CREATE TABLE jeu (
+        id INTEGER PRIMARY KEY,
+        img TEXT NOT NULL,
+        link  TEXT NOT NULL
+
 );
 
