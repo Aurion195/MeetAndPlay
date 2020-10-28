@@ -7,6 +7,7 @@
 	import CarouselEvenementDetail from "./DetailsEvenement/CarouselEvenementDetail.svelte";
 	import NavbarBack from "./Utilitaire/NavbarBack.svelte";
 import Login from "./User/Login.svelte";
+import ButtonInscription from "./DetailsEvenement/ButtonInscription.svelte";
 
 	export let url = ''
 </script>
@@ -15,6 +16,7 @@ import Login from "./User/Login.svelte";
 	<Route path="/eventDetails" >
 		<NavbarBack />
 		<CarouselEvenementDetail />
+		<ButtonInscription />
 	</Route>
 	
 	<Route path="/Login" >

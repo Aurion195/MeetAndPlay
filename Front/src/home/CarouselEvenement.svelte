@@ -9,9 +9,9 @@
 	}
 
 	const fetchImage = (async () => {
-		const response = await fetch('http://localhost:8000/getallevent')
+		const response = await fetch('http://0.0.0.0:5000/getallevent')
 		const event = await response.json()
-		return  [... event.data]
+		return  [... event]
 	})()
 </script>
 
@@ -28,7 +28,7 @@
 			{#each continents as data}
 				<div class="slide-content">
             		<section>
-                		<img class="evenement" src={data.img} width="600px" height="341px">
+                		<img class="evenement" src={data.Img} width="600px" height="341px">
 					</section>
 				</div>
 			{/each}

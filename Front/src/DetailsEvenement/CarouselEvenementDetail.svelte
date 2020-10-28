@@ -4,22 +4,39 @@
 
 	//Declarations des variables
     let continents = [] ;
-    let description, requirements, prix, placeRestante, lieux, date ;
+	let title; 
+	let description;
+	let requirements;
+	let prix;
+	let placeRestante;
+	let lieux; 
+	let date ;
 	let carousels = {perPage: 1}
 
 	//Dés que lon va changer de photo dans le caroussel, on va mettre à jour les données
 	function changed (event) {
-		console.log(event.detail.currentSlide)
-		console.log(continents)
-        title = continents[event.detail.currentSlide].title
+		title = continents[event.detail.currentSlide].titre ;
+		description = continents[event.detail.currentSlide].Description ;
+		requirements = continents[event.detail.currentSlide].Requierement ;
+		placeRestante = continents[event.detail.currentSlide].Placerestante ;
+		lieux = continents[event.detail.currentSlide].Lieux ;
+		date = continents[event.detail.currentSlide].Date ;
+		prix = continents[event.detail.currentSlide].Prix;
     }
 
 	const fetchImage = (async () => {
-		const response = await fetch('http://localhost:8000/getallevent')
+		const response = await fetch('http://localhost:5000/getallevent')
         const event = await response.json()
-        continents = [... event.data]
-        title = continents[0].title ;
-		return  [... event.data]
+        continents = [... event]
+		title = continents[0].titre ;
+		description = continents[0].Description ;
+		requirements = continents[0].Requierement ;
+		placeRestante = continents[0].Placerestante ;
+		prix = continents[0].Prix;
+		lieux = continents[0].Lieux ;
+		date = continents[0].Date ;
+
+		return  [... event]
 	})()
 </script>
 
@@ -36,7 +53,7 @@
             {#each continents as data}
 				<div class="slide-content">
             		<section>
-                		<img class="evenement" src={data.img} width="600px" height="341px">
+                		<img class="evenement" src={data.Img} width="600px" height="341px">
                     </section>
                 </div>
 			{/each}
@@ -49,11 +66,28 @@
         <div class="detailsEvent">
             <table>
                 <tr>
-                    <td>Détails :</td>
-                    <td>{title}</td>
+                    <td>Description :</td>
+                    <td class="droite">{description}</td>
                 </tr>
                 <tr>
-                    <td>Level requis :</td>
+					<td>Requirements :</td>
+					<td class="droite">{requirements}</td>
+				</tr>
+				<tr>
+					<td>Prix :</td>
+					<td class="droite">{prix}</td>
+				</tr>
+				<tr>
+					<td>Place restante :</td>
+					<td class="droite">{placeRestante}</td>
+				</tr>
+				<tr>
+					<td>Lieux :</td>
+					<td class="droite">{lieux}</td>
+				</tr>
+				<tr>
+					<td>Date :</td>
+					<td class="droite">{date}</td>
                 </tr>
             </table>
         </div>
@@ -108,6 +142,12 @@
 		max-height: 341px;
 		max-width: 80vw;
 		object-fit: contain;
+	}
+
+	.droite {
+		margin: 0 auto ;
+		margin-left: 10%;
+		text-align: right;
 	}
 </style>
 
