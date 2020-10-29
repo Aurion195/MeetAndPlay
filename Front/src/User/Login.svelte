@@ -1,16 +1,25 @@
+<script>
+  import Form from "@svelteschool/svelte-forms";
+  let values;
+</script>
+
 <section class="section Login">
-  <form class="col s12">
+  <Form bind:values>
       <div class="input-field col s6">
         <i class="material-icons prefix">account_circle</i>
-        <input id="icon_prefix" type="text" class="validate">
-        <label for="icon_prefix">Username</label>
+        <input
+        placeholder="Username ..."
+        type="text"
+        name="firstName" />
       </div>
       <div class="input-field col s6">
         <i class="material-icons prefix">lock</i>
-        <input id="icon_telephone" type="password" class="validate">
-        <label for="icon_telephone">Password</label>
+        <input
+        placeholder="Password ..."
+        type="text"
+        name="lastName" />
       </div>
-  </form>
+  </Form>
 </section>
 
 <style>

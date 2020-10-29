@@ -1,6 +1,6 @@
 <section>
     <div class="nav">
-        <ul class="left" style="text-align:center">
+        <ul class="left" style="text-align:center color:#fff">
             <a href="/">
                 <i class="medium material-icons">arrow_back</i>
             </a>

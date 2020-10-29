@@ -26,39 +26,35 @@
 			</div>
 			<div class="slide-content">
 				<section>
-					<img class="evenement" src="img/Jeux/mysterium.jpg" width="600px" height="341px">
-				</section>
-			</div>
-			<div class="slide-content">
-				<section>
-					<img class="evenement" src="img/Jeux/pute.jpg" width="600px" height="341px">
-				</section>
-			</div>
-			<div class="slide-content">
-				<section>
 					<img class="evenement" src="img/Jeux/santorini.jpg" width="600px" height="341px">
 				</section>
 			</div>
 			<span class="control" slot="right-control">
 					<ChevronRightIcon />
 			</span>
-			
+			<script>
+				window.addEventListener("resize", function () {
+					const fleche = document.querySelectorAll(".control");
+	
+					fleche.forEach(element => {
+						element.style.display = (document.documentElement.clientWidth < 700 ? "none" : "block") ;
+					});
+					
+					const div = document.querySelector(".jeux") ;
+					const image = document.querySelector(".slide-content img");
+					const heigth = window.getComputedStyle(image).height;
+					div.style.height = heigth
+				});
+	
+				if(document.documentElement.clientWidth < 700) {
+						const div = document.querySelector(".jeux") ;
+						const image = document.querySelector(".slide-content img");
+						const heigth = window.getComputedStyle(image).height;
+						div.style.height = heigth
+					}
+			</script>
 		</Carousel>
 		<br/>
-		<script>
-			window.addEventListener("resize", function () {
-				const fleche = document.querySelectorAll(".control");
-
-				fleche.forEach(element => {
-					element.style.display = (document.documentElement.clientWidth < 700 ? "none" : "block") ;
-				});
-				
-				const div = document.querySelector(".event") ;
-				const image = document.querySelector(".slide-content img");
-				const heigth = window.getComputedStyle(image).height;
-				div.style.height = heigth
-			});
-		</script>
 	</div>
 </section>
 

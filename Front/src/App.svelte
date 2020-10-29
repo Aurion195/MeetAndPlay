@@ -6,8 +6,11 @@
 	import CarouselEvenement from "./home/CarouselEvenement.svelte";
 	import CarouselEvenementDetail from "./DetailsEvenement/CarouselEvenementDetail.svelte";
 	import NavbarBack from "./Utilitaire/NavbarBack.svelte";
-import Login from "./User/Login.svelte";
-import ButtonInscription from "./DetailsEvenement/ButtonInscription.svelte";
+	import Login from "./User/Login.svelte";
+	import ButtonInscription from "./DetailsEvenement/ButtonInscription.svelte";
+	import CarouselJeuxAchat from "./home/CarouselJeuxAchat.svelte";
+	import ButtonAchat from "./home/ButtonAchat.svelte" ;
+import ButtonProfil from "./home/ButtonProfil.svelte";
 
 	export let url = ''
 </script>
@@ -29,5 +32,8 @@ import ButtonInscription from "./DetailsEvenement/ButtonInscription.svelte";
 		<CarouselEvenement />
 		<ButtonEvent />
 		<ProfilCard />
+		<ButtonProfil />
+		<CarouselJeuxAchat />
+		<ButtonAchat />
 	</Route>
 </Router>
