@@ -2,12 +2,10 @@
 	Component pour la sélection des profils
 -->
 <script>
-	import Carousel from '@beyonk/svelte-carousel'
-
 	//Declarations des variables
     	let continents = [] ;
 	let prenom, activite_recente, jeux_favoris, nombre_victoire, age, note, niveaux, img ;
-	let carousels = {perPage: 1}
+	let compteur = 0 ;
 
 	//Fonction permettant de donner les valeurs en fonction de l'avancement
 	//de la liste de profil
@@ -28,11 +26,15 @@
 		const event = await response.json()
 		continents = [... event]
 		if(continents != null) {
-			getData(0) ;
+			getData(compteur) ;
 		}
 
 		return  [... event]
 	})()
+
+	function ajout() {
+		getData(compteur+1) ;
+	}
 </script>
 
 
@@ -70,10 +72,10 @@
 		envoie une liste du coup quand on aime ou quand on aime pas
 	-->
 	<div class="button">
-		<div class="button gauche">
+		<div class="button gauche" on:click={ajout()}>
 			<i class="medium material-icons">do_not_disturb_on</i>
 		</div>
-		<div class="button droite">
+		<div class="button droite" on:click={ajout()}>
 			<i class="medium material-icons">check_circle</i>
 		</div>
 	</div>

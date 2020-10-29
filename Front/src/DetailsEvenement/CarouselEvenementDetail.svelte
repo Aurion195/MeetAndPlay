@@ -20,7 +20,7 @@
 	//Dés que lon va changer de photo dans le caroussel, on va mettre à jour les données
 	function changed (event) {
 		getData(event.detail.currentSlide) ;
-    	}
+    }
 
 	const fetchImage = (async () => {
 		const response = await fetch('http://localhost:5000/getallevent')

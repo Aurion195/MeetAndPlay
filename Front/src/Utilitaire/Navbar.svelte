@@ -4,6 +4,7 @@
 -->
 <script>
 	import { Router, Link, Route } from "svelte-routing";
+	
 	document.addEventListener('DOMContentLoaded', function() {
 		var elems = document.querySelectorAll('.sidenav');
 		var instances = M.Sidenav.init(elems);
