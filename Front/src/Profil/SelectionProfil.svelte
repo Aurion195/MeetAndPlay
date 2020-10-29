@@ -55,22 +55,16 @@
 			{/each}
 
 			<script>
-				window.addEventListener("resize", function () {
-					const fleche = document.querySelectorAll(".profil");
-	
-					fleche.forEach(element => {
-						element.style.display = (document.documentElement.clientWidth < 700 ? "none" : "block") ;
-					});
-					
+				window.addEventListener("resize", function () {	
 					const div = document.querySelector(".profil") ;
-					const image = document.querySelector(".slide-content img");
+					const image = document.querySelector(".slide-content");
 					const heigth = window.getComputedStyle(image).height;
 					div.style.height = heigth
 				});
 	
 				if(document.documentElement.clientWidth < 700) {
 						const div = document.querySelector(".profil") ;
-						const image = document.querySelector(".slide-content img");
+						const image = document.querySelector(".slide-content");
 						const heigth = window.getComputedStyle(image).height;
 						div.style.height = heigth
 				}
@@ -109,7 +103,7 @@
 {/await}
 </section>
 
-<section class="section buttonEventInscriptionEvent">
+<section class="section bandeauButton">
     <div class="button">
 	<div class="button gauche">
         <i class="medium material-icons">check_circle</i>
@@ -118,16 +112,21 @@
         <i class="medium material-icons">do_not_disturb_on</i>
     </div>
 	</div>
-	
+
 	<script>
 		window.addEventListener("resize", function () {	
-			const div = document.querySelector(".buttonEventInscriptionEvent") ;
-			const image = document.querySelector(".slide-content img");
-			const heigth = window.getComputedStyle(image).height;
-			div.style.height = heigth
-		});
-
-
+					const div = document.querySelector(".bandeauButton") ;
+					const image = document.querySelector(".slide-content");
+					const heigth = window.getComputedStyle(image).height;
+					div.style.height = heigth
+				});
+	
+				if(document.documentElement.clientWidth < 700) {
+						const div = document.querySelector(".bandeauButton") ;
+						const image = document.querySelector(".slide-content");
+						const heigth = window.getComputedStyle(image).height;
+						div.style.height = heigth
+				}
 	</script>
 </section>
 

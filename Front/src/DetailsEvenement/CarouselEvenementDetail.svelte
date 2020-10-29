@@ -45,6 +45,7 @@
 	{#await fetchImage}
 	{:then continents}
 	<div class="demo">
+		<div class="carrousel">
 		<Carousel on:change={changed} {...carousels}>		
 			<span class="control" slot="left-control">
 				<ChevronLeftIcon />
@@ -62,6 +63,7 @@
 					<ChevronRightIcon />
 			</span>
 		</Carousel>
+		</div>
         <br/>
         <div class="detailsEvent">
             <table>
@@ -99,29 +101,37 @@
 					element.style.display = (document.documentElement.clientWidth < 700 ? "none" : "block") ;
 				});
 				
-				const div = document.querySelector(".event") ;
-				const image = document.querySelector(".slide-content img");
+				const div = document.querySelector(".carousel") ;
+				const image = document.querySelector(".slide-content");
 				const heigth = window.getComputedStyle(image).height;
 				div.style.height = heigth
 			});
+
+			if(document.documentElement.clientWidth < 700) {
+				const div = document.querySelector(".carousel") ;
+				const image = document.querySelector(".slide-content");
+				const heigth = window.getComputedStyle(image).height;
+				div.style.height = heigth
+			}
 		</script>
 </div>
 {/await}
 </section>
 
-
 <style>
 	.event {
 		margin-bottom: 2%;
 	}
+
 	.demo {
         margin: 0 auto;
 		margin-top: 1%;
 		height: 341px;
+		max-height: 341px;
 		width: 80vw;
 		text-align: center;
 	}
-	
+
 	.control :global(svg) {
 		width: auto;
 		height: auto;

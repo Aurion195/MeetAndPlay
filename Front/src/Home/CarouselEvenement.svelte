@@ -13,6 +13,8 @@
 		const event = await response.json()
 		return  [... event]
 	})()
+
+	
 </script>
 
 
