@@ -1,18 +1,20 @@
 <script>
 	import { Router, Link, Route } from "svelte-routing";
 	import Navbar from "./Utilitaire/Navbar.svelte"
-	import ButtonEvent from "./home/ButtonEvent.svelte"
-	import ProfilCard from "./home/ProfilCard.svelte"
-	import CarouselEvenement from "./home/CarouselEvenement.svelte";
+	import ButtonEvent from "./Home/ButtonEvent.svelte"
+	import ProfilCard from "./Home/ProfilCard.svelte"
+	import CarouselEvenement from "./Home/CarouselEvenement.svelte";
 	import CarouselEvenementDetail from "./DetailsEvenement/CarouselEvenementDetail.svelte";
 	import NavbarBack from "./Utilitaire/NavbarBack.svelte";
 	import Login from "./User/Login.svelte";
 	import ButtonInscription from "./DetailsEvenement/ButtonInscription.svelte";
-	import CarouselJeuxAchat from "./home/CarouselJeuxAchat.svelte";
-	import ButtonAchat from "./home/ButtonAchat.svelte" ;
-import ButtonProfil from "./home/ButtonProfil.svelte";
+	import CarouselJeuxAchat from "./Home/CarouselJeuxAchat.svelte";
+	import ButtonAchat from "./Home/ButtonAchat.svelte" ;
+import ButtonProfil from "./Home/ButtonProfil.svelte";
+import SelectionProfil from "./Profil/SelectionProfil.svelte";
+import BandeauTinder from "./Profil/BandeauTinder.svelte";
 
-	export let url = ''
+	export let url = "";
 </script>
 
 <Router url="{url}">
@@ -25,6 +27,11 @@ import ButtonProfil from "./home/ButtonProfil.svelte";
 	<Route path="/Login" >
 		<NavbarBack />
 		<Login />
+	</Route>
+
+	<Route path="/profilSelection" >
+		<NavbarBack />
+		<SelectionProfil />
 	</Route>
 
 	<Route path="/">

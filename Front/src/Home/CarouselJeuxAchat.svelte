@@ -32,29 +32,30 @@
 			<span class="control" slot="right-control">
 					<ChevronRightIcon />
 			</span>
-			<script>
-				window.addEventListener("resize", function () {
-					const fleche = document.querySelectorAll(".control");
-	
-					fleche.forEach(element => {
-						element.style.display = (document.documentElement.clientWidth < 700 ? "none" : "block") ;
-					});
-					
+		</Carousel>
+		<br/>
+
+		<script>
+			window.addEventListener("resize", function () {
+				const fleche = document.querySelectorAll(".control");
+
+				fleche.forEach(element => {
+					element.style.display = (document.documentElement.clientWidth < 700 ? "none" : "block") ;
+				});
+				
+				const div = document.querySelector(".jeux") ;
+				const image = document.querySelector(".slide-content img");
+				const heigth = window.getComputedStyle(image).height;
+				div.style.height = heigth
+			});
+
+			if(document.documentElement.clientWidth < 700) {
 					const div = document.querySelector(".jeux") ;
 					const image = document.querySelector(".slide-content img");
 					const heigth = window.getComputedStyle(image).height;
 					div.style.height = heigth
-				});
-	
-				if(document.documentElement.clientWidth < 700) {
-						const div = document.querySelector(".jeux") ;
-						const image = document.querySelector(".slide-content img");
-						const heigth = window.getComputedStyle(image).height;
-						div.style.height = heigth
-					}
-			</script>
-		</Carousel>
-		<br/>
+			}
+		</script>
 	</div>
 </section>
 

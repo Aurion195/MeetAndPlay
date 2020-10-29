@@ -49,6 +49,13 @@
 					const heigth = window.getComputedStyle(image).height;
 					div.style.height = heigth
 				});
+
+				if(document.documentElement.clientWidth < 700) {
+					const div = document.querySelector(".event") ;
+					const image = document.querySelector(".slide-content img");
+					const heigth = window.getComputedStyle(image).height;
+					div.style.height = heigth
+				}
 			</script>
 		</Carousel>
 		<br/>
