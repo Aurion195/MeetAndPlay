@@ -1,20 +1,23 @@
+<!--
+	Components pour les évènements afin que l'utilisateur puisse voir
+	les différents évènements qui vont avoir lieu
+-->
 <script>
-	import { onMount } from "svelte";
 	import Carousel from '@beyonk/svelte-carousel'
 	import { ChevronLeftIcon, ChevronRightIcon } from 'svelte-feather-icons'
 
+	//Permet de changer quand on clique sur les chevrons
 	let carousels = {perPage: 1}
 	function changed (event) {
 		console.log(event.detail.currentSlide)
 	}
 
+	//Fonction permettant de récupérer toutes les images des différents évènements
 	const fetchImage = (async () => {
 		const response = await fetch('http://0.0.0.0:5000/getallevent')
 		const event = await response.json()
 		return  [... event]
 	})()
-
-	
 </script>
 
 
@@ -29,8 +32,8 @@
 
 			{#each continents as data}
 				<div class="slide-content">
-            		<section>
-                		<img class="evenement" src={data.Img} width="600px" height="341px">
+					<section>
+                				<img class="evenement" src={data.Img} width="600px" height="341px">
 					</section>
 				</div>
 			{/each}
@@ -60,9 +63,8 @@
 				}
 			</script>
 		</Carousel>
-		<br/>
-</div>
-{/await}
+	</div>
+	{/await}
 </section>
 
 
@@ -70,8 +72,9 @@
 	.event {
 		margin-bottom: 2%;
 	}
+
 	.demo {
-        margin: 0 auto;
+        	margin: 0 auto;
 		margin-top: 1%;
 		height: 341px;
 		width: 80vw;
@@ -89,8 +92,8 @@
 	.slide-content {
 		display: inline;
 		flex-direction: column;
-        background-color: white;
-    }
+        	background-color: white;
+    	}
 
 	.slide-content img {
 		width: 100%;

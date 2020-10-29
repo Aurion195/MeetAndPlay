@@ -15,22 +15,37 @@
 	export let url = "";
 </script>
 
+<!--
+	Permet de gérer les différentes routes afin de naviguer dans la PWA
+-->
 <Router url="{url}">
+	<!--
+		Route pour le détails des différents évenements
+	-->
 	<Route path="/eventDetails" >
 		<NavbarBack />
 		<CarouselEvenementDetail />
 	</Route>
 	
+	<!--
+		Route pour se connecter
+	-->
 	<Route path="/Login" >
 		<NavbarBack />
 		<Login />
 	</Route>
 
+	<!--
+		Route pour séléctionner les profils
+	-->
 	<Route path="/profilSelection" >
 		<NavbarBack />
 		<SelectionProfil />
 	</Route>
 
+	<!--
+		Route pour la page d'acceuil
+	-->
 	<Route path="/">
 		<Navbar />
 		<CarouselEvenement />

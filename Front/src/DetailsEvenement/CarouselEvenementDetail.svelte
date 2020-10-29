@@ -3,38 +3,33 @@
 	import { ChevronLeftIcon, ChevronRightIcon } from 'svelte-feather-icons'
 
 	//Declarations des variables
-    let continents = [] ;
-	let title; 
-	let description;
-	let requirements;
-	let prix;
-	let placeRestante;
-	let lieux; 
-	let date ;
+    	let continents = [] ;
+	let title, description, requirements, prix, placeRestante, lieux ,date ;
 	let carousels = {perPage: 1}
 
+	//Fonction permettant d'assigner les variables en fonction des indices
+	function getData(indice) {
+		title = continents[indice].titre ;
+		description = continents[indice].Description ;
+		requirements = continents[indice].Requierement ;
+		placeRestante = continents[indice].Placerestante ;
+		lieux = continents[indice].Lieux ;
+		date = continents[indice].Date ;
+		prix = continents[indice].Prix;
+	}
 	//Dés que lon va changer de photo dans le caroussel, on va mettre à jour les données
 	function changed (event) {
-		title = continents[event.detail.currentSlide].titre ;
-		description = continents[event.detail.currentSlide].Description ;
-		requirements = continents[event.detail.currentSlide].Requierement ;
-		placeRestante = continents[event.detail.currentSlide].Placerestante ;
-		lieux = continents[event.detail.currentSlide].Lieux ;
-		date = continents[event.detail.currentSlide].Date ;
-		prix = continents[event.detail.currentSlide].Prix;
-    }
+		getData(event.detail.currentSlide) ;
+    	}
 
 	const fetchImage = (async () => {
 		const response = await fetch('http://localhost:5000/getallevent')
-        const event = await response.json()
-        continents = [... event]
-		title = continents[0].titre ;
-		description = continents[0].Description ;
-		requirements = continents[0].Requierement ;
-		placeRestante = continents[0].Placerestante ;
-		prix = continents[0].Prix;
-		lieux = continents[0].Lieux ;
-		date = continents[0].Date ;
+        	const event = await response.json()
+		continents = [... event]
+		
+		if(continents != null) {
+			getData(0)
+		}
 
 		return  [... event]
 	})()
@@ -51,80 +46,78 @@
 				<ChevronLeftIcon />
 			</span>
 
-            {#each continents as data}
+            		{#each continents as data}
 				<div class="slide-content">
-            		<section>
-                		<img class="evenement" src={data.Img} width="600px" height="341px">
-                    </section>
-                </div>
+            				<section>
+                				<img class="evenement" src={data.Img} width="600px" height="341px">
+					</section>
+                		</div>
 			{/each}
 
 			<span class="control" slot="right-control">
 					<ChevronRightIcon />
 			</span>
 		</Carousel>
-		</div>
-		<br/>
-		<div class="button">
-			<a onclick="alerte()" href="/" class="waves-effect waves-light btn">S'inscrire</a>
-		</div>
-		<script>
-			function alerte() {
-				alert("Votre inscription est en cour merci pour votre confiance") ;
-			}
-		</script>
-        <br/>
+	</div>
+	<div class="button">
+		<a onclick="alerte()" href="/" class="waves-effect waves-light btn">S'inscrire</a>
+	</div>
+	<script>
+		function alerte() {
+			alert("Votre inscription est en cour merci pour votre confiance") ;
+		}
+	</script>
         <div class="detailsEvent">
-            <table>
-                <tr>
-                    <td>Description :</td>
-                    <td class="droite">{description}</td>
-                </tr>
-                <tr>
-					<td>Requirements :</td>
-					<td class="droite">{requirements}</td>
-				</tr>
-				<tr>
-					<td>Prix :</td>
-					<td class="droite">{prix}</td>
-				</tr>
-				<tr>
-					<td>Place restante :</td>
-					<td class="droite">{placeRestante}</td>
-				</tr>
-				<tr>
-					<td>Lieux :</td>
-					<td class="droite">{lieux}</td>
-				</tr>
-				<tr>
-					<td>Date :</td>
-					<td class="droite">{date}</td>
-                </tr>
+        	<table>
+                	<tr>
+                    		<td>Description :</td>
+                    		<td class="droite">{description}</td>
+                	</tr>
+                	<tr>
+				<td>Requirements :</td>
+				<td class="droite">{requirements}</td>
+			</tr>
+			<tr>
+				<td>Prix :</td>
+				<td class="droite">{prix}</td>
+			</tr>
+			<tr>
+				<td>Place restante :</td>
+				<td class="droite">{placeRestante}</td>
+			</tr>
+			<tr>
+				<td>Lieux :</td>
+				<td class="droite">{lieux}</td>
+			</tr>
+			<tr>
+				<td>Date :</td>
+				<td class="droite">{date}</td>
+                	</tr>
             </table>
         </div>
-		<script>
-			window.addEventListener("resize", function () {
-				const fleche = document.querySelectorAll(".control");
+	<script>
+		window.addEventListener("resize", function () {
+			const fleche = document.querySelectorAll(".control");
 
-				fleche.forEach(element => {
-					element.style.display = (document.documentElement.clientWidth < 700 ? "none" : "block") ;
-				});
-				
-				const div = document.querySelector(".carousel") ;
-				const image = document.querySelector(".slide-content");
-				const heigth = window.getComputedStyle(image).height;
-				div.style.height = heigth
+			fleche.forEach(element => {
+				element.style.display = (document.documentElement.clientWidth < 700 ? "none" : "block") ;
 			});
+			
+			const div = document.querySelector(".carousel") ;
+			const image = document.querySelector(".slide-content");
+			const heigth = window.getComputedStyle(image).height;
+			div.style.height = heigth
+		});
 
-			if(document.documentElement.clientWidth < 700) {
-				const div = document.querySelector(".carousel") ;
-				const image = document.querySelector(".slide-content");
-				const heigth = window.getComputedStyle(image).height;
-				div.style.height = heigth
-			}
-		</script>
-</div>
-{/await}
+		if(document.documentElement.clientWidth < 700) {
+			const div = document.querySelector(".carousel") ;
+			const image = document.querySelector(".slide-content");
+			const heigth = window.getComputedStyle(image).height;
+			div.style.height = heigth
+		}
+	</script>
+	</div>
+	{/await}
 </section>
 
 <style>
@@ -133,7 +126,7 @@
 	}
 
 	.demo {
-        margin: 0 auto;
+        	margin: 0 auto;
 		margin-top: 1%;
 		height: 341px;
 		max-height: 341px;
@@ -152,8 +145,8 @@
 	.slide-content {
 		display: inline;
 		flex-direction: column;
-        background-color: white;
-    }
+        	background-color: white;
+    	}
 
 	.slide-content img {
 		width: 100%;

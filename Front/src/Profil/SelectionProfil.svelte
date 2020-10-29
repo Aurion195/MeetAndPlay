@@ -1,40 +1,35 @@
+<!--
+	Component pour la sélection des profils
+-->
 <script>
 	import Carousel from '@beyonk/svelte-carousel'
-	import { ChevronLeftIcon, ChevronRightIcon } from 'svelte-feather-icons'
 
 	//Declarations des variables
-    let continents = [] ;
-	let prenom; 
-	let activite_recente;
-	let jeux_favoris;
-	let nombre_victoire;
-	let age;
-	let note; 
-	let niveaux ;
+    	let continents = [] ;
+	let prenom, activite_recente, jeux_favoris, nombre_victoire, age, note, niveaux, img ;
 	let carousels = {perPage: 1}
 
-	//Dés que lon va changer de photo dans le caroussel, on va mettre à jour les données
-	function changed (event) {
-		prenom = continents[event.detail.currentSlide].prenom ;
-		activite_recente = continents[event.detail.currentSlide].activité_recente ;
-		jeux_favoris = continents[event.detail.currentSlide].jeu_favoris ;
-		age = continents[event.detail.currentSlide].age ;
-		note = continents[event.detail.currentSlide].note ;
-		niveaux = continents[event.detail.currentSlide].niveau ;
-		nombre_victoire = continents[event.detail.currentSlide].nombre_victoire;
-    }
+	//Fonction permettant de donner les valeurs en fonction de l'avancement
+	//de la liste de profil
+	function getData(indice) {
+		prenom = continents[indice].prenom ;
+		activite_recente = continents[indice].activité_recente ;
+		jeux_favoris = continents[indice].jeu_favoris ;
+		age = continents[indice].age ;
+		note = continents[indice].note ;
+		niveaux = continents[indice].niveau ;
+		nombre_victoire = continents[indice].nombre_victoire;
+		img = continents[indice].Img;
+	}
 
+	//Permet de récupérer tous les profils afin de les afficher
 	const fetchImage = (async () => {
 		const response = await fetch('http://localhost:5000/getallusers')
-        const event = await response.json()
-        continents = [... event]
-		prenom = continents[0].prenom ;
-		activite_recente = continents[0].activité_recente ;
-		jeux_favoris = continents[0].jeu_favoris ;
-		age = continents[0].age ;
-		note = continents[0].note ;
-		niveaux = continents[0].niveau ;
-		nombre_victoire = continents[0].nombre_victoire;
+		const event = await response.json()
+		continents = [... event]
+		if(continents != null) {
+			getData(0) ;
+		}
 
 		return  [... event]
 	})()
@@ -44,33 +39,36 @@
 <section class="section profil">
 	{#await fetchImage}
 	{:then continents}
+	<!--
+		Carousel pour afficher tous les profils
+	-->
 	<div class="demo" style="max-heigth:370px">
-		<Carousel on:change={changed} {...carousels}>		
-            {#each continents as data}
-				<div class="slide-content">
-            		<section>
-                		<img class="evenement" src={data.Img} width="600px" height="341px">
-                    </section>
-                </div>
-			{/each}
+		<div class="slide-content">
+			<section>
+				<img class="evenement" src={img} width="600px" height="341px">
+		    	</section>
+		</div>
+		<script>
+			window.addEventListener("resize", function () {	
+				const div = document.querySelector(".profil") ;
+				const image = document.querySelector(".slide-content");
+				const heigth = window.getComputedStyle(image).height;
+				div.style.height = heigth
+			});
 
-			<script>
-				window.addEventListener("resize", function () {	
+			if(document.documentElement.clientWidth < 700) {
 					const div = document.querySelector(".profil") ;
 					const image = document.querySelector(".slide-content");
 					const heigth = window.getComputedStyle(image).height;
 					div.style.height = heigth
-				});
-	
-				if(document.documentElement.clientWidth < 700) {
-						const div = document.querySelector(".profil") ;
-						const image = document.querySelector(".slide-content");
-						const heigth = window.getComputedStyle(image).height;
-						div.style.height = heigth
-				}
-			</script>
-		</Carousel>
+			}
+		</script>
 	</div>
+	<!--
+		Button pour afficher les profils, quand on clique sur un seul
+		on continue la liste tant que l'utilisateur part ou qu'il continue
+		envoie une liste du coup quand on aime ou quand on aime pas
+	-->
 	<div class="button">
 		<div class="button gauche">
 			<i class="medium material-icons">do_not_disturb_on</i>
@@ -94,8 +92,15 @@
 			div.style.height = heigth
 		}
 	</script>
-    <div class="detailsProfil">
+	<!--
+		Tableau pour afficher les données relatives au profil
+	-->
+   	<div class="detailsProfil">
 		<table>
+			<tr>
+				<td>prenom :</td>
+				<td class="droite">{prenom}</td>
+			</tr>
 			<tr>
 				<td>activite_recente :</td>
 				<td class="droite">{activite_recente}</td>
@@ -121,7 +126,7 @@
 				<td class="droite">{niveaux}</td>
 			</tr>
 		</table>
-    </div>
+    	</div>
 	{/await}
 </section>
 
@@ -132,7 +137,7 @@
 	}
 
 	.demo {
-        margin: 0 auto;
+		margin: 0 auto;
 		margin-top: 1%;
 		height: 341px;
 		max-height: 341px;
@@ -143,8 +148,8 @@
 	.slide-content {
 		display: inline;
 		flex-direction: column;
-        background-color: white;
-    }
+		background-color: white;
+    	}
 
 	.slide-content img {
 		width: 100%;
@@ -155,19 +160,19 @@
 	}
 
 	.button {
-        width: 100%;
-        display: flex;
-    }
+		width: 100%;
+		display: flex;
+	}
 
-    .button .gauche {
-        float: left;
-        width: 30%;
-        margin-left: 20%;
-    }
+	.button .gauche {
+		float: left;
+		width: 30%;
+		margin-left: 20%;
+    	}
 
-    .button .droite {
-        width: 30%;
-        margin-left:10% ;
-    }
+    	.button .droite {
+		width: 30%;
+		margin-left:10% ;
+    	}
 </style>
 

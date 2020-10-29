@@ -1,3 +1,6 @@
+<!--
+	Componenent pour acheter les différents jeux
+-->
 <script>
 	import Carousel from '@beyonk/svelte-carousel'
 	import { ChevronLeftIcon, ChevronRightIcon } from 'svelte-feather-icons'
@@ -33,8 +36,6 @@
 					<ChevronRightIcon />
 			</span>
 		</Carousel>
-		<br/>
-
 		<script>
 			window.addEventListener("resize", function () {
 				const fleche = document.querySelectorAll(".control");
@@ -60,11 +61,8 @@
 </section>
 
 <style>
-	.event {
-		margin-bottom: 2%;
-	}
 	.demo {
-        margin: 0 auto;
+        	margin: 0 auto;
 		margin-top: 1%;
 		height: 341px;
 		width: 80vw;
@@ -82,8 +80,8 @@
 	.slide-content {
 		display: inline;
 		flex-direction: column;
-        background-color: white;
-    }
+        	background-color: white;
+    	}
 
 	.slide-content img {
 		width: 100%;
