@@ -64,6 +64,15 @@
 			</span>
 		</Carousel>
 		</div>
+		<br/>
+		<div class="button">
+			<a onclick="alerte()" href="/" class="waves-effect waves-light btn">S'inscrire</a>
+		</div>
+		<script>
+			function alerte() {
+				alert("Votre inscription est en cour merci pour votre confiance") ;
+			}
+		</script>
         <br/>
         <div class="detailsEvent">
             <table>

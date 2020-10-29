@@ -7,12 +7,10 @@
 	import CarouselEvenementDetail from "./DetailsEvenement/CarouselEvenementDetail.svelte";
 	import NavbarBack from "./Utilitaire/NavbarBack.svelte";
 	import Login from "./User/Login.svelte";
-	import ButtonInscription from "./DetailsEvenement/ButtonInscription.svelte";
 	import CarouselJeuxAchat from "./Home/CarouselJeuxAchat.svelte";
 	import ButtonAchat from "./Home/ButtonAchat.svelte" ;
-import ButtonProfil from "./Home/ButtonProfil.svelte";
-import SelectionProfil from "./Profil/SelectionProfil.svelte";
-import BandeauTinder from "./Profil/BandeauTinder.svelte";
+	import ButtonProfil from "./Home/ButtonProfil.svelte";
+	import SelectionProfil from "./Profil/SelectionProfil.svelte";
 
 	export let url = "";
 </script>
@@ -21,7 +19,6 @@ import BandeauTinder from "./Profil/BandeauTinder.svelte";
 	<Route path="/eventDetails" >
 		<NavbarBack />
 		<CarouselEvenementDetail />
-		<ButtonInscription />
 	</Route>
 	
 	<Route path="/Login" >

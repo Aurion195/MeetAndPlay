@@ -70,76 +70,72 @@
 				}
 			</script>
 		</Carousel>
-        <br/>
-        <div class="detailsProfil">
-            <table>
-                <tr>
-                    <td>activite_recente :</td>
-                    <td class="droite">{activite_recente}</td>
-                </tr>
-                <tr>
-					<td>jeux_favoris :</td>
-					<td class="droite">{jeux_favoris}</td>
-				</tr>
-				<tr>
-					<td>nombre_victoire :</td>
-					<td class="droite">{nombre_victoire}</td>
-				</tr>
-				<tr>
-					<td>Place restante :</td>
-					<td class="droite">{age}</td>
-				</tr>
-				<tr>
-					<td>note :</td>
-					<td class="droite">{note}</td>
-				</tr>
-				<tr>
-					<td>niveaux :</td>
-					<td class="droite">{niveaux}</td>
-                </tr>
-            </table>
-        </div>
-</div>
-{/await}
-</section>
-
-<section class="section bandeauButton">
-    <div class="button">
-	<div class="button gauche">
-        <i class="medium material-icons">check_circle</i>
-    </div>
-    <div class="button droite">
-        <i class="medium material-icons">do_not_disturb_on</i>
-    </div>
 	</div>
-
+	<div class="button">
+		<div class="button gauche">
+			<i class="medium material-icons">do_not_disturb_on</i>
+		</div>
+		<div class="button droite">
+			<i class="medium material-icons">check_circle</i>
+		</div>
+	</div>
 	<script>
 		window.addEventListener("resize", function () {	
-					const div = document.querySelector(".bandeauButton") ;
-					const image = document.querySelector(".slide-content");
-					const heigth = window.getComputedStyle(image).height;
-					div.style.height = heigth
-				});
+			const div = document.querySelector(".bandeauButton") ;
+			const image = document.querySelector(".slide-content");
+			const heigth = window.getComputedStyle(image).height;
+			div.style.height = heigth
+		});
 	
-				if(document.documentElement.clientWidth < 700) {
-						const div = document.querySelector(".bandeauButton") ;
-						const image = document.querySelector(".slide-content");
-						const heigth = window.getComputedStyle(image).height;
-						div.style.height = heigth
-				}
+		if(document.documentElement.clientWidth < 700) {
+			const div = document.querySelector(".bandeauButton") ;
+			const image = document.querySelector(".slide-content");
+			const heigth = window.getComputedStyle(image).height;
+			div.style.height = heigth
+		}
 	</script>
+    <div class="detailsProfil">
+		<table>
+			<tr>
+				<td>activite_recente :</td>
+				<td class="droite">{activite_recente}</td>
+			</tr>
+			<tr>
+				<td>jeux_favoris :</td>
+				<td class="droite">{jeux_favoris}</td>
+			</tr>
+			<tr>
+				<td>nombre_victoire :</td>
+				<td class="droite">{nombre_victoire}</td>
+			</tr>
+			<tr>
+				<td>Place restante :</td>
+				<td class="droite">{age}</td>
+			</tr>
+			<tr>
+				<td>note :</td>
+				<td class="droite">{note}</td>
+			</tr>
+			<tr>
+				<td>niveaux :</td>
+				<td class="droite">{niveaux}</td>
+			</tr>
+		</table>
+    </div>
+	{/await}
 </section>
 
 <style>
 	.profil {
 		margin-bottom: 2%;
-		max-height: 370px;
+		max-height: 341px;
 	}
 
 	.demo {
         margin: 0 auto;
 		margin-top: 1%;
 		height: 341px;
+		max-height: 341px;
 		width: 80vw;
 		text-align: center;
 	}
@@ -161,7 +157,6 @@
 	.button {
         width: 100%;
         display: flex;
-        padding-bottom: 20%;
     }
 
     .button .gauche {
@@ -172,7 +167,7 @@
 
     .button .droite {
         width: 30%;
-        margin-left:30% ;
+        margin-left:10% ;
     }
 </style>
 
