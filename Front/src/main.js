@@ -14,7 +14,9 @@ if ('serviceWorker' in navigator) {
 const app = new App({
 	target: document.body,
 	props: {
-		name: 'world',
+    name: 'world',
+    hydrate: true,
+    isLogged: false
 	}
 });
 

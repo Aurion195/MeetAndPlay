@@ -1,13 +1,18 @@
+<!--
+	Components pour les évènements afin que l'utilisateur puisse voir
+	les différents évènements qui vont avoir lieu
+-->
 <script>
-	import { onMount } from "svelte";
 	import Carousel from '@beyonk/svelte-carousel'
 	import { ChevronLeftIcon, ChevronRightIcon } from 'svelte-feather-icons'
 
+	//Permet de changer quand on clique sur les chevrons
 	let carousels = {perPage: 1}
 	function changed (event) {
 		console.log(event.detail.currentSlide)
 	}
 
+	//Fonction permettant de récupérer toutes les images des différents évènements
 	const fetchImage = (async () => {
 		const response = await fetch('http://0.0.0.0:5000/getallevent')
 		const event = await response.json()
@@ -27,8 +32,8 @@
 
 			{#each continents as data}
 				<div class="slide-content">
-            		<section>
-                		<img class="evenement" src={data.Img} width="600px" height="341px">
+					<section>
+                				<img class="evenement" src={data.Img} width="600px" height="341px">
 					</section>
 				</div>
 			{/each}
@@ -36,24 +41,30 @@
 			<span class="control" slot="right-control">
 					<ChevronRightIcon />
 			</span>
-		</Carousel>
-		<br/>
-		<script>
-			window.addEventListener("resize", function () {
-				const fleche = document.querySelectorAll(".control");
-
-				fleche.forEach(element => {
-					element.style.display = (document.documentElement.clientWidth < 700 ? "none" : "block") ;
+			<script>
+				window.addEventListener("resize", function () {
+					const fleche = document.querySelectorAll(".control");
+	
+					fleche.forEach(element => {
+						element.style.display = (document.documentElement.clientWidth < 700 ? "none" : "block") ;
+					});
+					
+					const div = document.querySelector(".event") ;
+					const image = document.querySelector(".slide-content img");
+					const heigth = window.getComputedStyle(image).height;
+					div.style.height = heigth
 				});
-				
-				const div = document.querySelector(".event") ;
-				const image = document.querySelector(".slide-content img");
-				const heigth = window.getComputedStyle(image).height;
-				div.style.height = heigth
-			});
-		</script>
-</div>
-{/await}
+
+				if(document.documentElement.clientWidth < 700) {
+					const div = document.querySelector(".event") ;
+					const image = document.querySelector(".slide-content img");
+					const heigth = window.getComputedStyle(image).height;
+					div.style.height = heigth
+				}
+			</script>
+		</Carousel>
+	</div>
+	{/await}
 </section>
 
 
@@ -61,8 +72,9 @@
 	.event {
 		margin-bottom: 2%;
 	}
+
 	.demo {
-        margin: 0 auto;
+        	margin: 0 auto;
 		margin-top: 1%;
 		height: 341px;
 		width: 80vw;
@@ -80,8 +92,8 @@
 	.slide-content {
 		display: inline;
 		flex-direction: column;
-        background-color: white;
-    }
+        	background-color: white;
+    	}
 
 	.slide-content img {
 		width: 100%;
