@@ -42,6 +42,13 @@ VALUES(
 
 INSERT INTO Users(
         prenom ,
+        nom,
+        username,
+        password,
+        tel,
+        mail,
+        avatar,
+        adresse,
         age ,
         jeu_favoris,
         activité_recente,
@@ -50,10 +57,17 @@ INSERT INTO Users(
         niveau)
 VALUES(
         "random" ,
-        "26" ,
+        "nom" ,
+        "legrosgarcia",
+        "AZERTY" ,
+        02020202,
+        "maildemerde",
+        "avatar",
+        "Marseille",
+        22,
         "belote",
-        "event3" ,
         0 ,
         3 ,
+        3,
         'noob'
         );
