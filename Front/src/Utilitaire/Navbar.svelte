@@ -14,6 +14,8 @@
 		var elems = document.querySelectorAll('.dropdown-trigger');
 		var instances = M.Dropdown.init(elems);
 	});
+
+	export let isLogged ;
 </script>
 
 <nav>
@@ -27,28 +29,41 @@
 					<a>Accueil</a>
 				</Link>
 			</li>
-			<li><a href="collapsible.html">Notification</a></li>
+			<li><a href="">Notification</a></li>
 			  <!-- Dropdown Trigger -->
 			<li><a class='dropdown-trigger' data-target='dropdown1'>Plus d'option<i class="material-icons right">arrow_drop_down</i></a></li>
 
 			<!-- Dropdown Structure -->
 			<ul id='dropdown1' class='dropdown-content'>
-			<Link to="/Login">
-				<li>
-					<a>Se connecter</a>
-				</li>
-			</Link>
 			
-			<Link to="/Logout">
-				<li>
-					<a>Se deconnecter</a>
-				</li>
-			</Link>
-			<Link to="/Inscription">
-				<li>
-					<a>S'inscrire</a>
-				</li>
-			</Link>
+			<!--
+				Si l'utilisateur est connecté on affiche pas le lien pour
+				se connecter et s'inscrire
+			-->
+			{#if !isLogged}
+				<Link to="/Login">
+					<li>
+						<a>Se connecter</a>
+					</li>
+				</Link>
+				<Link to="/Inscription">
+					<li>
+						<a>S'inscrire</a>
+					</li>
+				</Link>
+			{/if}
+			
+			<!--
+				Si l'utilisateur est connecté on affiche uniquement le lien 
+				pour se logout
+			-->
+			{#if isLogged}
+				<Link to="/Logout">
+					<li>
+						<a>Se deconnecter</a>
+					</li>
+				</Link>
+			{/if}
 			<li class="divider" tabindex="-1"></li>
 			<Link to="Evaluer">
 				<li>
@@ -61,13 +76,18 @@
 </nav>
 
 <ul class="sidenav" id="mobile-demo">
-	<Link to="/Login"><li><a href="/Login">Se connecter</a></li></Link>
-	<li><a href="#!">Se deconnecter</a></li>
-	<li><a href="#!">S'inscrire</a></li>
+	{#if !isLogged}
+		<Link to="/Login"><li><a href="/Login">Se connecter</a></li></Link>
+		<Link to="/Inscription"><li><a href="#!">S'inscrire</a></li></Link>
+	{/if}
+
+	{#if isLogged}
+		<Link to="/Logout"><li><a href="#!">Se deconnecter</a></li></Link>
+	{/if}
 	<li class="divider" tabindex="-1"></li>
 	<li><a href="sass.html">Mon Profil</a></li>
-	<li><a href="badges.html">Accueil</a></li>
-	<li><a href="collapsible.html">Notification</a></li>
+	<Link to="/"><li><a href="badges.html">Accueil</a></li></Link>
+	<li><a href="">Notification</a></li>
 	<li><a href="#!">Evaluer joueur</a></li>
 </ul>
 
