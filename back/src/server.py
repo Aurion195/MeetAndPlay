@@ -1,13 +1,18 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 from flask import Flask, make_response, jsonify, request
 import os
 import dataset
 from flask_cors import CORS
+from flask.helpers import flash
+from passlib.hash import sha256_crypt 
 app = Flask(__name__)
 db = dataset.connect('sqlite:///../database/database.sqlite')
 cors = CORS(app)
 
 eventsTable = db['events']
 usersTable = db['Users']
+
 
 def fetch_db(event_id):  # Each book scnerio
     return eventsTable.find_one(id=event_id)
@@ -31,36 +36,94 @@ def fetch_User_db_all():
     return users
 
 
+def add_user(newuser):
+    if usersTable.find_one(username=newuser):
+        return False
+    else:
+        usersTable.insert(dict(
+            usename=newuser['username'],
+            firstname=newuser['prenom'],
+            lastname=newuser['nom'],
+            age=newuser['age'],
+            password=newuser['secure_password'],
+            adresse=newuser['adresse'],
+            tel=newuser['tel'],
+            mail=newuser['mail'],
+            ))
+        return True
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        password = request.form.get('password')
+        newuser={
+        "username" : request.form.get('username'),
+        "firstname" : request.form.get('prenom'),
+        "lastname" : request.form.get('nom'),
+        "age" : request.form.get('age'),
+        "secure_password" : sha256_crypt.encrypt(str(password)),
+        "adresse" : request.form.get('adresse'),
+        "tel" : request.form.get('tel'),
+        "mail" : request.form.get('mail'),
+        }
+        if add_use(newuser) == True:
+            return make_response(jsonify("status : OK"), 200)
+        else:
+            return make_response(jsonify("status : KO"), 404)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        usernamedata = usersTable.find_one(usename=username)
+    if usernamedata is None:
+        flash('No username', 'danger')
+    else:
+        for passwor_data in passworddata:
+            if sha256_crypt.verify(password, passwor_data):
+                session['log'] = True
+                flash('You are now logged in!!', 'success')
+            else:
+
+                     # to be edited from here do redict to either svm or home
+
+                flash('incorrect password', 'danger')
+
+
 @app.route('/getallevent', methods=['GET'])
 def api_events():
-    if request.method == "GET":
+    if request.method == 'GET':
         return make_response(jsonify(fetch_db_all()), 200)
+
 
 @app.route('/geteventbyid/<event_id>', methods=['GET'])
 def api_each_event(event_id):
-    print(event_id)
-    if request.method == "GET":
+    if request.method == 'GET':
         event_obj = fetch_db(event_id)
         if event_obj:
             return make_response(jsonify(event_obj), 200)
         else:
             return make_response(jsonify(event_obj), 404)
 
+
 @app.route('/getallusers', methods=['GET'])
 def api_users():
-    if request.method == "GET":
+    if request.method == 'GET':
         return make_response(jsonify(fetch_User_db_all()), 200)
+
 
 @app.route('/getuserbyid/<user_id>', methods=['GET'])
 def api_each_user(user_id):
-    print(user_id)
-    if request.method == "GET":
+    if request.method == 'GET':
         user_obj = fetch_User_db(user_id)
         if user_obj:
             return make_response(jsonify(user_obj), 200)
         else:
             return make_response(jsonify(user_obj), 404)
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=os.getenv('PORT'))
