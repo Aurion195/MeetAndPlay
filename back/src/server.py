@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from flask import Flask, make_response, jsonify, request
+from flask import Flask, make_response, jsonify, request,Response
 import os
 import json
 import dataset
@@ -80,9 +80,9 @@ def register():
             "mail" : request.form.get('mail'),
         }
         if add_user(newuser) == True:
-            return (jsonify("status : OK"), 200)
+            return Response(jsonify("status : OK"), 200)
         else:
-            return (jsonify("status : KO"), 404)
+            return  Response(jsonify("status : KO"), 404)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -113,7 +113,7 @@ def api_events():
 @app.route('/deleteUser/<user_id>', methods=['GET'])
 def deleteUser(user_id):
     if request.method == 'GET':
-        if deleteUserdb(user_id):
+        if deleteUser_db(user_id):
             return make_response(jsonify("status : OK, message : Deleted successful"), 200)
         else:
             return make_response(jsonify("status : KO, message : Deleted not successful"), 400)
@@ -131,7 +131,7 @@ def api_each_event(event_id):
             return make_response(jsonify(event_obj), 404)
 
 
-@app.route('/getallusers', methods=['GET']
+@app.route('/getallusers', methods=['GET'])
 def api_users():
     if request.method == 'GET':
         return make_response(jsonify(fetch_User_db_all()), 200)
