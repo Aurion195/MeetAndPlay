@@ -80,7 +80,12 @@ def register():
             "mail" : request.form.get('mail'),
         }
         if add_user(newuser) == True:
-            return Response(jsonify("status : OK"), 200)
+                response = Response()
+
+                response.headers["Access-Control-Allow-Origin"] = "*"
+                response.body=jsonify("status : OK")
+               
+                return response(jsonify("status : OK"), 200)
         else:
             return  Response(jsonify("status : KO"), 404)
 
@@ -92,7 +97,7 @@ def login():
         password = request.form.get('password')
 
         usernamedata = usersTable.find_one(usename=username)
-        
+
     if usernamedata is None:
         return make_response(jsonify("status : KO , error : User no found"), 404)
     else:
