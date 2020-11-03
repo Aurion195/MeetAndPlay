@@ -15,6 +15,17 @@ eventsTable = db['events']
 usersTable = db['Users']
 
 
+def build_preflight_response():
+    response = make_response()
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add('Access-Control-Allow-Headers', "*")
+    response.headers.add('Access-Control-Allow-Methods', "*")
+    return response
+    
+def build_actual_response(response):
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
+
 def fetch_db(event_id):  # Each book scnerio
     return eventsTable.find_one(id=event_id)
 
@@ -66,7 +77,6 @@ def add_user(newuser):
 
 
 @app.route('/register', methods=['GET', 'POST'])
-@cross_origin()
 def register():
     if request.method == 'POST':
         password = request.form.get('password')
@@ -81,12 +91,9 @@ def register():
             "mail" : request.form.get('mail'),
         }
         if add_user(newuser) == True:
-                response = Response()
-
-                response.headers["Access-Control-Allow-Origin"] = "*"
-                response.body=jsonify("status : OK")
                
-                return response(jsonify("status : OK"), 200)
+        
+                return build_actual_response(jsonify("status : OK"), 200)
         else:
             return  make_response(jsonify("status : KO"), 404)
 
@@ -152,5 +159,5 @@ def api_each_user(user_id):
         else:
             return make_response(jsonify(user_obj), 404)
 
-if __name__ == '__main__':
+if __name__ == 'main':
     app.run(host='0.0.0.0', port=os.getenv('PORT'))
