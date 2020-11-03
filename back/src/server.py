@@ -59,12 +59,12 @@ def add_user(newuser):
     if usersTable.find_one(username=newuser):
         return False
     else:
-        if usersTable.insert(dict(
+        usersTable.insert(dict(
             username=newuser['username'],
-            prenom=newuser['firstname'],
-            nom=newuser['lastname'],
+            prenom=newuser['prenom'],
+            nom=newuser['nom'],
             age=newuser['age'],
-            password=newuser['secure_password'],
+            password=newuser['password'],
             adresse=newuser['adresse'],
             tel=newuser['tel'],
             mail=newuser['mail'],
@@ -74,20 +74,17 @@ def add_user(newuser):
             nombre_victoire="0",
             note=" ",
             niveau="0",
-            )):
-            return True
-        else:
-            return False
+            ))
+        return True
         
 
 @app.route('/register', methods=['POST','OPTIONS'])
-
 @cross_origin(origin='*',headers=['Content-Type','Authorization'])
 def register():
-
+    
     if request.method == 'POST':
-       
-        return jsonify({ 'Status': 'OK' })
+        data=request.get_json()
+        return jsonify({ 'Status': "OK" }), 200
     else:
         return jsonify("status : KO")
 

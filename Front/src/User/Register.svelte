@@ -7,9 +7,11 @@
         import {fetchPost} from "./../Service/helper.js";
 
         const addUser = (async () => {
-                const response =  await fetch("http://localhost:5000/register", values)
+                const response =  await fetchPost("http://localhost:5000/register", values)
                                   .then(res => {
-                                        console.log(res)
+                                        if(res["Status"] === "OK") {
+                                                alert("Vous vous êtes bien enregistré")
+                                        }
                                  })
         })
 
