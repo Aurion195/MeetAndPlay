@@ -1,4 +1,5 @@
 <script>
+	import { redirectGuard } from 'svelte-guard-history-router';
 	import { Router, Link, Route } from "svelte-routing";
 	import Navbar from "./Utilitaire/Navbar.svelte"
 	import ButtonEvent from "./Home/ButtonEvent.svelte"
@@ -14,6 +15,8 @@
 import Register from "./User/Register.svelte";
 
 	export let url = "";
+	export let session ;
+	export const enshureSession = redirectGuard("/login", () => !session);
 </script>
 
 <!--
@@ -23,7 +26,7 @@ import Register from "./User/Register.svelte";
 	<!--
 		Route pour le détails des différents évenements
 	-->
-	<Route path="/eventDetails" >
+	<Route path="/eventDetails" guards={enshureSession} >
 		<NavbarBack />
 		<CarouselEvenementDetail />
 	</Route>

@@ -3,72 +3,86 @@
 -->
 
 <script>
-	import Form from "@svelteschool/svelte-forms";
+        import axios from 'axios';
+        import {fetchPost} from "./../Service/helper.js";
 
-	let values;
+        const addUser = (async () => {
+                const response =  await fetch("http://localhost:5000/register", values)
+                                  .then(res => {
+                                        console.log(res)
+                                 })
+        })
+
+       
+        let values = {} ;
 </script>
 
 <section class="section Register">
-        <form method="post" action="">
-                <Form bind:values>
+        <form method="POST" on:submit={addUser}>
                         <div class="input-field col s6">
                                 <i class="material-icons prefix">face</i>
                                 <input
                                 placeholder="Nom de famille ..."
                                 type="text"
-                                name="lastName" />
+                                name="nom"
+                                bind:value={values.nom} />
                         </div>
                         <div class="input-field col s6">
                                 <i class="material-icons prefix">face</i>
                                 <input
                                 placeholder="Prénom ..."
                                 type="text"
-                                name="firstName" />
+                                name="prenom"
+                                bind:value={values.prenom} />
                         </div>
                         <div class="input-field col s6">
                                 <i class="material-icons prefix">face</i>
                                 <input
                                 placeholder="Age ..."
                                 type="text"
-                                name="age" />
+                                name="age"
+                                bind:value={values.age} />
                         </div>      
                         <div class="input-field col s6">
                                 <i class="material-icons prefix">account_circle</i>
                                 <input
                                 placeholder="Username ..."
                                 type="text"
-                                name="username" />
+                                name="username"
+                                bind:value={values.username} />
                         </div>
                         <div class="input-field col s6">
                                 <i class="material-icons prefix">lock</i>
                                 <input
                                 placeholder="Password ..."
                                 type="password"
-                                name="password" />
+                                name="password"
+                                bind:value={values.password} />
                         </div>
                         <div class="input-field col s6">
                                 <i class="material-icons prefix">home</i>
                                 <input
                                 placeholder="Adresse ..."
                                 type="text"
-                                name="adresse" />
+                                name="adresse"
+                                bind:value={values.adresse} />
                         </div>
                         <div class="input-field col s6">
                                 <i class="material-icons prefix">call</i>
                                 <input
                                 placeholder="Téléphone ..."
                                 type="text"
-                                name="teleĥone" />
+                                name="tel"
+                                bind:value={values.tel} />
                         </div>
                         <div class="input-field col s6">
                                 <i class="material-icons prefix">mail</i>
                                 <input
                                 placeholder="Mail ..."
                                 type="text"
-                                name="mail" />
+                                name="mail"
+                                bind:value={values.mail} />
                         </div>      
-                </Form>
-
                 <button class="btn waves-effect waves-light" type="submit" name="action">Connexion
 			<i class="material-icons right">send</i>
 		</button>

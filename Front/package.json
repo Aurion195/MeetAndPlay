@@ -18,8 +18,10 @@
     "svelte-feather-icons": "^3.3.0"
   },
   "dependencies": {
+    "axios": "^0.21.0",
     "materialize-css": "^1.0.0-rc.2",
     "sirv-cli": "^1.0.0",
+    "svelte-guard-history-router": "^3.1.1",
     "svelte-routing": "^1.4.2"
   }
 }

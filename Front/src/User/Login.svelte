@@ -3,14 +3,11 @@
 -->
 
 <script>
-	import Form from "@svelteschool/svelte-forms";
-
 	let values;
 </script>
 
 <section class="section Login">
 	<form method="post" action="">
-		<Form bind:values>
 			<div class="input-field col s6">
 				<i class="material-icons prefix">account_circle</i>
 				<input
@@ -25,7 +22,6 @@
 				type="text"
 				name="lastName" />
 			</div>
-		</Form>
 		
 		<button class="btn waves-effect waves-light" type="submit" name="action">Connexion
 			<i class="material-icons right">send</i>
@@ -40,7 +36,7 @@
         }
 
 	.btn {
-		width: 10%;
+		width: auto;
                 margin-left: 45%;
 	}
 </style>
