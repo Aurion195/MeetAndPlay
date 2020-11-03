@@ -29,6 +29,11 @@ def fetch_db_all():
 def fetch_User_db(user_id):  # Each book scnerio
     return usersTable.find_one(id=user_id)
 
+def deleteUser_db(user_id):  # Each book scnerio
+    if usersTable.delete(id=user_id):
+            return True
+    else:
+            return False
 
 def fetch_User_db_all():
     users = []
@@ -63,7 +68,6 @@ def add_user(newuser):
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        print("méthode post --------------------------------------")
         password = request.form.get('password')
         newuser={
             "username" : request.form.get('username'),
@@ -88,24 +92,33 @@ def login():
         password = request.form.get('password')
 
         usernamedata = usersTable.find_one(usename=username)
+        
     if usernamedata is None:
-        flash('No username', 'danger')
+        return make_response(jsonify("status : KO , error : User no found"), 404)
     else:
-        for passwor_data in passworddata:
-            if sha256_crypt.verify(password, passwor_data):
+        for password in usernamedata["password"]:
+            if sha256_crypt.verify(password, usernamedata["password"]):
                 session['log'] = True
-                flash('You are now logged in!!', 'success')
+                return make_response(jsonify("status : OK, message : Logged in successfully"), 200)
             else:
-
-                     # to be edited from here do redict to either svm or home
-
-                flash('incorrect password', 'danger')
-
+               return make_response(jsonify("status : KO, message : Wrong password"), 400)
 
 @app.route('/getallevent', methods=['GET'])
 def api_events():
     if request.method == 'GET':
         return make_response(jsonify(fetch_db_all()), 200)
+
+
+
+@app.route('/deleteUser/<user_id>', methods=['GET'])
+def deleteUser(user_id):
+    if request.method == 'GET':
+        if deleteUserdb(user_id):
+            return make_response(jsonify("status : OK, message : Deleted successful"), 200)
+        else:
+            return make_response(jsonify("status : KO, message : Deleted not successful"), 400)
+
+
 
 
 @app.route('/geteventbyid/<event_id>', methods=['GET'])
