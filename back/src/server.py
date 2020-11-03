@@ -93,7 +93,7 @@ def register():
         if add_user(newuser) == True:
                
         
-                return build_actual_response(jsonify("status : OK"), 200)
+                return build_actual_response(jsonify("status : OK"))
         else:
             return  make_response(jsonify("status : KO"), 404)
 
@@ -159,5 +159,5 @@ def api_each_user(user_id):
         else:
             return make_response(jsonify(user_obj), 404)
 
-if __name__ == 'main':
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port=os.getenv('PORT'))
