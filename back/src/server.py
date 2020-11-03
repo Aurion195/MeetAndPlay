@@ -8,7 +8,9 @@ from flask_cors import CORS,cross_origin
 from flask.helpers import flash
 from passlib.hash import sha256_crypt 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
+
 db = dataset.connect('sqlite:///../database/database.sqlite')
 
 eventsTable = db['events']
@@ -78,29 +80,16 @@ def add_user(newuser):
             return False
         
 
-@app.route('/register', methods=['POST'])
-def register():
-    if request.method == 'OPTIONS': 
-        return build_preflight_response()
-    elif request.method == 'POST':
-        password = request.form.get('password')
-        data=request.get_json() 
-        newuser={
-            "username" : data['username'],
-            "firstname" :data['prenom'],
-            "lastname" :data['nom'],
-            "age" :data['age'],
-            "secure_password" : sha256_crypt.encrypt(str(password)),
-            "adresse" :data['adresse'],
-            "tel" :data['tel'],
-            "mail" :data['mail'],
-        }
+@app.route('/register', methods=['POST','OPTIONS'])
 
-        add_user(newuser)
-        
-        return build_actual_response(jsonify({ 'Status': 'OK' }))
+@cross_origin(origin='*',headers=['Content-Type','Authorization'])
+def register():
+
+    if request.method == 'POST':
+       
+        return jsonify({ 'Status': 'OK' })
     else:
-        return build_actual_response(jsonify("status : KO"))
+        return jsonify("status : KO")
 
 
 @app.route('/login', methods=['GET', 'POST'])
