@@ -10,6 +10,8 @@ from passlib.hash import sha256_crypt
 app = Flask(__name__)
 db = dataset.connect('sqlite:///../database/database.sqlite')
 cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
+
 
 eventsTable = db['events']
 usersTable = db['Users']
