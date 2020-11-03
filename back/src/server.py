@@ -95,7 +95,7 @@ def register():
         
                 return build_actual_response(jsonify("status : OK"))
         else:
-            return  make_response(jsonify("status : KO"), 404)
+            return  build_actual_response(jsonify("status : KO"))
 
 
 @app.route('/login', methods=['GET', 'POST'])
