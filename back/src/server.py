@@ -4,14 +4,12 @@ from flask import Flask, make_response, jsonify, request,Response
 import os
 import json
 import dataset
-from flask_cors import CORS
+from flask_cors import CORS,cross_origin
 from flask.helpers import flash
 from passlib.hash import sha256_crypt 
 app = Flask(__name__)
 db = dataset.connect('sqlite:///../database/database.sqlite')
 cors = CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
-
 
 eventsTable = db['events']
 usersTable = db['Users']
@@ -68,6 +66,7 @@ def add_user(newuser):
 
 
 @app.route('/register', methods=['GET', 'POST'])
+@cross_origin()
 def register():
     if request.method == 'POST':
         password = request.form.get('password')
