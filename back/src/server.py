@@ -59,23 +59,27 @@ def add_user(newuser):
     if usersTable.find_one(username=newuser):
         return False
     else:
-        usersTable.insert(dict(
-            username=newuser['username'],
-            prenom=newuser['prenom'],
-            nom=newuser['nom'],
-            age=newuser['age'],
-            password=newuser['password'],
-            adresse=newuser['adresse'],
-            tel=newuser['tel'],
-            mail=newuser['mail'],
-            avatar = " ",
-            jeu_favoris=" ",
-            activité_recente=" ",
-            nombre_victoire="0",
-            note=" ",
-            niveau="0",
-            ))
-        return True
+         
+        result = db.execute('INSERT INTO Users (prenom ,nom,username,password,tel,mail,avatar,adresse,age ,jeu_favoris,activité_recente,nombre_victoire ,note ,niveau) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)',
+                    (
+                    newuser['username'],
+                    newuser['firstname'],
+                    newuser['lastname'],
+                    newuser['age'],
+                    newuser['secure_password'],
+                    newuser['adresse'],
+                    newuser['tel'],
+                    newuser['mail'],
+                    newuser["avatar "],
+                    newuser["jeu_favoris"],
+                    newuser["activité_recente"],
+                    newuser["nombre_victoire"],
+                    newuser["note"],
+                    newuser["niveau"]
+                    )
+                )
+        return result
+    
         
 
 @app.route('/register', methods=['POST','OPTIONS'])
@@ -84,6 +88,7 @@ def register():
     
     if request.method == 'POST':
         data=request.get_json()
+        add=add_user(data)
         return jsonify({ 'Status': "OK" }), 200
     else:
         return jsonify("status : KO")
