@@ -57,7 +57,7 @@ def add_user(newuser):
     if usersTable.find_one(username=newuser):
         return False
     else:
-        usersTable.insert(dict(
+        if usersTable.insert(dict(
             username=newuser['username'],
             prenom=newuser['firstname'],
             nom=newuser['lastname'],
@@ -72,28 +72,31 @@ def add_user(newuser):
             nombre_victoire="0",
             note=" ",
             niveau="0",
-            ))
-        return True
-
+            )):
+            return True
+        else:
+            return False
+        
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         password = request.form.get('password')
+        data=request.get_json() 
         newuser={
-            "username" : request.form.get('username'),
-            "firstname" : request.form.get('prenom'),
-            "lastname" : request.form.get('nom'),
-            "age" : request.form.get('age'),
+            "username" : data['username'],
+            "firstname" :data['prenom'],
+            "lastname" :data['nom'],
+            "age" :data['age'],
             "secure_password" : sha256_crypt.encrypt(str(password)),
-            "adresse" : request.form.get('adresse'),
-            "tel" : request.form.get('tel'),
-            "mail" : request.form.get('mail'),
+            "adresse" :data['adresse'],
+            "tel" :data['tel'],
+            "mail" :data['mail'],
         }
         if add_user(newuser) == True:
                
         
-                return build_actual_response(jsonify("status : OK"))
+            return build_actual_response(jsonify("status : OK"))
         else:
             return  build_actual_response(jsonify("status : KO"))
 
