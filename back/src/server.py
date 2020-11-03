@@ -80,9 +80,9 @@ def register():
             "mail" : request.form.get('mail'),
         }
         if add_user(newuser) == True:
-            return make_response(jsonify("status : OK"), 200)
+            return (jsonify("status : OK"), 200)
         else:
-            return make_response(jsonify("status : KO"), 404)
+            return (jsonify("status : KO"), 404)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -131,7 +131,7 @@ def api_each_event(event_id):
             return make_response(jsonify(event_obj), 404)
 
 
-@app.route('/getallusers', methods=['GET'])
+@app.route('/getallusers', methods=['GET']
 def api_users():
     if request.method == 'GET':
         return make_response(jsonify(fetch_User_db_all()), 200)
