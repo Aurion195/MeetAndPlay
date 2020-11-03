@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, make_response, jsonify, request
 import os
+import json
 import dataset
 from flask_cors import CORS
 from flask.helpers import flash
@@ -41,14 +42,20 @@ def add_user(newuser):
         return False
     else:
         usersTable.insert(dict(
-            usename=newuser['username'],
-            firstname=newuser['prenom'],
-            lastname=newuser['nom'],
+            username=newuser['username'],
+            prenom=newuser['firstname'],
+            nom=newuser['lastname'],
             age=newuser['age'],
             password=newuser['secure_password'],
             adresse=newuser['adresse'],
             tel=newuser['tel'],
             mail=newuser['mail'],
+            avatar = " ",
+            jeu_favoris=" ",
+            activité_recente=" ",
+            nombre_victoire="0",
+            note=" ",
+            niveau="0",
             ))
         return True
 
@@ -56,18 +63,19 @@ def add_user(newuser):
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
+        print("méthode post --------------------------------------")
         password = request.form.get('password')
         newuser={
-        "username" : request.form.get('username'),
-        "firstname" : request.form.get('prenom'),
-        "lastname" : request.form.get('nom'),
-        "age" : request.form.get('age'),
-        "secure_password" : sha256_crypt.encrypt(str(password)),
-        "adresse" : request.form.get('adresse'),
-        "tel" : request.form.get('tel'),
-        "mail" : request.form.get('mail'),
+            "username" : request.form.get('username'),
+            "firstname" : request.form.get('prenom'),
+            "lastname" : request.form.get('nom'),
+            "age" : request.form.get('age'),
+            "secure_password" : sha256_crypt.encrypt(str(password)),
+            "adresse" : request.form.get('adresse'),
+            "tel" : request.form.get('tel'),
+            "mail" : request.form.get('mail'),
         }
-        if add_use(newuser) == True:
+        if add_user(newuser) == True:
             return make_response(jsonify("status : OK"), 200)
         else:
             return make_response(jsonify("status : KO"), 404)
