@@ -8,7 +8,7 @@ from flask_cors import CORS,cross_origin
 from flask.helpers import flash
 from passlib.hash import sha256_crypt 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/*": {"origins": "*"}})
+cors = CORS(app)#, resources={r"/*": {"origins": "*"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 db = dataset.connect('sqlite:///../database/database.sqlite')
@@ -82,7 +82,7 @@ def add_user(newuser):
     
         
 
-@app.route('/register', methods=['POST','OPTIONS'])
+@app.route('/register', methods=['POST'])
 @cross_origin(origin='*',headers=['Content-Type','Authorization'])
 def register():
     if request.method == 'POST':
@@ -103,8 +103,8 @@ def register():
             note=0,
             niveau=0,
             ))
-        resp = make_response(jsonify({ 'Status': "OK" }))
-        return build_actual_response(resp), 200
+        
+        return jsonify({ 'Status': "OK" }), 200
     else:
         return jsonify({"status" : "KO"}), 400
 

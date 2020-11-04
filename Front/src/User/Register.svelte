@@ -11,7 +11,8 @@
         const addUser = (() => {
                 fetchPost("http://localhost:5000/register", values)
                 .then(res => {
-                        if(res["Status"] === "OK") {
+                        console.log(res)
+                        if(res.statusText === "OK") {
                                 alert("Vous vous êtes bien enregistré")
                         }
                 })
