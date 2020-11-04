@@ -3,24 +3,36 @@
 -->
 
 <script>
-        import axios from 'axios';
         import {fetchPost} from "./../Service/helper.js";
 
-        const addUser = (async () => {
-                const response =  await fetchPost("http://localhost:5000/register", values)
-                                  .then(res => {
-                                        if(res["Status"] === "OK") {
-                                                alert("Vous vous êtes bien enregistré")
-                                        }
-                                 })
+        let selected = 0 ;
+        let values = {} ;
+
+        const addUser = (() => {
+                fetchPost("http://localhost:5000/register", values)
+                .then(res => {
+                        if(res["Status"] === "OK") {
+                                alert("Vous vous êtes bien enregistré")
+                        }
+                })
+                .catch(err => {
+                        alert("Nous n'avons pas réussi à vous enregistré")
+                        console.log(err.message)
+                })
         })
 
-       
-        let values = {} ;
+        function getImg() {
+                if(selected == 1) {
+                        console.log("Homme")
+                }
+                else {
+                        console.log("femme")
+                }
+        }
 </script>
 
 <section class="section Register">
-        <form method="POST" on:submit={addUser}>
+        <form method="POST" on:submit|preventDefault={addUser}>
                         <div class="input-field col s6">
                                 <i class="material-icons prefix">face</i>
                                 <input
@@ -39,11 +51,8 @@
                         </div>
                         <div class="input-field col s6">
                                 <i class="material-icons prefix">face</i>
-                                <input
-                                placeholder="Age ..."
-                                type="text"
-                                name="age"
-                                bind:value={values.age} />
+                                <input type=number bind:value={values.age} min=0 max=100>
+                                <input type=range bind:value={values.age} min=0 max=100>
                         </div>      
                         <div class="input-field col s6">
                                 <i class="material-icons prefix">account_circle</i>
@@ -84,8 +93,32 @@
                                 type="text"
                                 name="mail"
                                 bind:value={values.mail} />
-                        </div>      
-                <button class="btn waves-effect waves-light" type="submit" name="action">Connexion
+                        </div>  
+                        <div class="input-field col s6">
+                                <i class="material-icons prefix">favorite</i>
+                                <input
+                                placeholder="Jeux favoris"
+                                type="text"
+                                name="jeu_favoris"
+                                bind:value={values.jeu_favoris}>
+                        </div>
+                        <div class="input-field col s6">
+                                <div on:click={getImg}>
+                                        <label>
+                                                <input type=radio bind:group={selected} value={1}>
+                                                Homme
+                                        </label>
+                                </div>
+                                <div on:click={getImg}>
+                                        <label>
+                                                <input type=radio bind:group={selected} value={2}>
+                                                Femme
+                                        </label>
+                                </div>
+
+
+                        </div>
+                <button class="btn waves-effect waves-light" name="action" type="submit">Connexion
 			<i class="material-icons right">send</i>
 		</button>
         </form>
@@ -97,12 +130,14 @@
 	}
 
         .input-field {
-                width: 50%;
-                margin-left: 25%;
+                display: block;
+                margin:auto;
+                width: 70%;
         }
 
         .btn {
-		width: 10%;
-                margin-left: 45%;
+                display: block;
+                margin:auto;
+		width: auto;
 	}
 </style>

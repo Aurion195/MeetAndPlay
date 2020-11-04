@@ -2,6 +2,9 @@
 	Component pour la sélection des profils
 -->
 <script>
+import { get } from "svelte/store";
+
+
 	//Declarations des variables
     	let continents = [] ;
 	let prenom, activite_recente, jeux_favoris, nombre_victoire, age, note, niveaux, img ;
@@ -25,6 +28,7 @@
 		const response = await fetch('http://localhost:5000/getallusers')
 		const event = await response.json()
 		continents = [... event]
+		console.log(continents)
 		if(continents != null) {
 			getData(compteur) ;
 		}
@@ -33,6 +37,7 @@
 	})()
 
 	function ajout() {
+		console.log(compteur)
 		getData(compteur+1) ;
 	}
 </script>
@@ -72,10 +77,10 @@
 		envoie une liste du coup quand on aime ou quand on aime pas
 	-->
 	<div class="button">
-		<div class="button gauche" on:click={ajout()}>
+		<div class="button gauche" on:click={ajout}>
 			<i class="medium material-icons">do_not_disturb_on</i>
 		</div>
-		<div class="button droite" on:click={ajout()}>
+		<div class="button droite" on:click={ajout}>
 			<i class="medium material-icons">check_circle</i>
 		</div>
 	</div>

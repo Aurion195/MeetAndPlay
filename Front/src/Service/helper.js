@@ -1,16 +1,16 @@
-export async function fetchPost(url, data) {
+/*export async function fetchPost(url, data) {
         const res = await fetch(
           url, {
             method: "POST",
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json',
-              'Access-Control-Allow-Origin':"*",
-              'Access-Control-Allow-Headers': "*",
-              'Access-Control-Allow-Methods': "*",
             },
             body: JSON.stringify(data),
-          });
-          const response = await res.json();
-          return response;
-      }
+          })
+          return res ;
+      }*/
+import axios from "axios"
+export function fetchPost(url, data) {
+  return axios.post(url, data) ;
+}

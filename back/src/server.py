@@ -66,7 +66,7 @@ def add_user(newuser):
                     newuser['firstname'],
                     newuser['lastname'],
                     newuser['age'],
-                    newuser['secure_password'],
+                    newuser['password'],
                     newuser['adresse'],
                     newuser['tel'],
                     newuser['mail'],
@@ -85,13 +85,28 @@ def add_user(newuser):
 @app.route('/register', methods=['POST','OPTIONS'])
 @cross_origin(origin='*',headers=['Content-Type','Authorization'])
 def register():
-    
     if request.method == 'POST':
-        data=request.get_json()
-        add=add_user(data)
-        return jsonify({ 'Status': "OK" }), 200
+        newuser=request.get_json()
+        tmp = usersTable.insert(dict(
+            username=newuser['username'],
+            prenom=newuser['prenom'],
+            nom=newuser['nom'],
+            age=newuser['age'],
+            password=newuser['password'],
+            adresse=newuser['adresse'],
+            tel=newuser['tel'],
+            mail=newuser['mail'],
+            avatar = " ",
+            jeu_favoris=newuser['jeu_favoris'],
+            activité_recente=" ",
+            nombre_victoire=0,
+            note=0,
+            niveau=0,
+            ))
+        resp = make_response(jsonify({ 'Status': "OK" }))
+        return build_actual_response(resp), 200
     else:
-        return jsonify("status : KO")
+        return jsonify({"status" : "KO"}), 400
 
 
 @app.route('/login', methods=['GET', 'POST'])
