@@ -1,14 +1,13 @@
 <!--
 	Component pour la sélection des profils
 -->
-<script>
-import { get } from "svelte/store";
-
+<script>import { listen } from "svelte/internal";
 
 	//Declarations des variables
     	let continents = [] ;
 	let prenom, activite_recente, jeux_favoris, nombre_victoire, age, note, niveaux, img ;
 	let compteur = 0 ;
+	let finListe = false ;
 
 	//Fonction permettant de donner les valeurs en fonction de l'avancement
 	//de la liste de profil
@@ -36,14 +35,21 @@ import { get } from "svelte/store";
 		return  [... event]
 	})()
 
+	//Fonction permettant de changer les données
 	function ajout() {
-		console.log(compteur)
-		getData(compteur+1) ;
+		compteur += 1 ;
+		if(compteur == continents.length) {
+			finListe = true ;
+		}
+		else {
+			getData(compteur) ;
+		}
 	}
 </script>
 
 
 <section class="section profil">
+	{#if !finListe}
 	{#await fetchImage}
 	{:then continents}
 	<!--
@@ -121,7 +127,7 @@ import { get } from "svelte/store";
 				<td class="droite">{nombre_victoire}</td>
 			</tr>
 			<tr>
-				<td>Place restante :</td>
+				<td>Age :</td>
 				<td class="droite">{age}</td>
 			</tr>
 			<tr>
@@ -135,6 +141,9 @@ import { get } from "svelte/store";
 		</table>
     	</div>
 	{/await}
+	{:else}
+	    <p>Vous avez atteint la fin de la listen, veuillez revenir plus tard</p>
+	{/if}
 </section>
 
 <style>
