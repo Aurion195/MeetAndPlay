@@ -113,15 +113,16 @@ def register():
 def login():
     if request.method == 'POST':
         username = request.form.get('username')
-        password = request.form.get('password')
-
+        password = request.form.get('password')  
+        user = request.get_json()
         usernamedata = usersTable.find_one(usename=username)
 
     if usernamedata is None:
         return make_response(jsonify("status : KO , error : User no found"), 404)
     else:
-        for password in usernamedata["password"]:
-            if sha256_crypt.verify(password, usernamedata["password"]):
+        # for user['password'] in usernamedata["password"]:
+            # if sha256_crypt.verify(password, usernamedata["password"]):
+            if (password == usernamedata["password"]):
                 session['log'] = True
                 return make_response(jsonify("status : OK, message : Logged in successfully"), 200)
             else:
