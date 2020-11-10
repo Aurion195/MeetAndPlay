@@ -1,8 +1,0 @@
-{
-    "short_name" : "M&P",
-    "name": "MeetAndPlay",
-    "display": "fullscreen",
-    "Scope": "/",
-    "orientation" : "portrait",
-    "lang": "fr"
-}

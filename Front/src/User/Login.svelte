@@ -3,24 +3,47 @@
 -->
 
 <script>
-	let values;
+import { fetchPost } from "../Service/helper";
+
+
+	let values = {} ;
+
+	const loginUser = (() => {
+		fetchPost("http://localhost:5000/login", values)
+		.then(res => {
+			console.log(res)
+			if(res.statusText === "OK") {
+				alert("Vous vous êtes connecté");
+			}
+			else {
+				alert("Vous n'avez pas réussi à vous connecter");
+			}
+		})
+		.catch(err => {
+			console.log(err)
+			alert("Error : " + err.message);
+		})
+	});
+	
 </script>
 
 <section class="section Login">
-	<form method="post" action="">
+	<form method="POST" on:submit|preventDefault={loginUser}>
 			<div class="input-field col s6">
 				<i class="material-icons prefix">account_circle</i>
 				<input
 				placeholder="Username ..."
 				type="text"
-				name="firstName" />
+				name="username" 
+				bind:value={values.username}/>
 			</div>
 			<div class="input-field col s6">
 				<i class="material-icons prefix">lock</i>
 				<input
 				placeholder="Password ..."
-				type="text"
-				name="lastName" />
+				type="password"
+				name="password" 
+				bind:value={values.password}/>
 			</div>
 		
 		<button class="btn waves-effect waves-light" type="submit" name="action">Connexion

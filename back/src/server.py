@@ -109,24 +109,24 @@ def register():
         return jsonify({"status" : "KO"}), 400
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['POST'])
 def login():
     if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')  
         user = request.get_json()
+        username = user['username']
+        password = user['password']
         usernamedata = usersTable.find_one(usename=username)
 
-    if usernamedata is None:
-        return make_response(jsonify("status : KO , error : User no found"), 404)
+        if usernamedata is None:
+            return jsonify("status : KO , error : User no found"), 404
+        else:
+                if (password == usernamedata["password"]):
+                    session['log'] = True
+                    return jsonify({"status" : "OK", "message" : "Logged in successfully"}), 200
+                else:
+                    return jsonify({"status" : "KO", "message" : "Wrong password"}), 204
     else:
-        # for user['password'] in usernamedata["password"]:
-            # if sha256_crypt.verify(password, usernamedata["password"]):
-            if (password == usernamedata["password"]):
-                session['log'] = True
-                return make_response(jsonify("status : OK, message : Logged in successfully"), 200)
-            else:
-               return make_response(jsonify("status : KO, message : Wrong password"), 400)
+        return jsonify({"status":"KO", "message":"error"}),404
 
 @app.route('/getallevent', methods=['GET'])
 def api_events():

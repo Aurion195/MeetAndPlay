@@ -1,14 +1,57 @@
-const { createServer } = require("http");
-const app = require("./dist/App.js");
+'use strict';
 
-createServer((req, res) => {
-  const { html } = app.render({ url: req.url });
+// Update cache names any time any of the cached files change.
+const CACHE_NAME = 'static-cache-v1';
 
-  res.write(`
-    <!DOCTYPE html>
-    <div id="app">${html}</div>
-    <script src="/dist/bundle.js"></script>
-  `);
+// Add list of files to cache here.
+const FILES_TO_CACHE = [
+    '/offline.html',
+];
 
-  res.end();
-}).listen(3000);
+self.addEventListener('install', (evt) => {
+    console.log('[ServiceWorker] Install');
+
+    evt.waitUntil(
+        caches.open(CACHE_NAME).then((cache) => {
+            console.log('[ServiceWorker] Pre-caching offline page');
+            return cache.addAll(FILES_TO_CACHE);
+        })
+    );
+
+    self.skipWaiting();
+});
+
+self.addEventListener('activate', (evt) => {
+    console.log('[ServiceWorker] Activate');
+    // Remove previous cached data from disk.
+    evt.waitUntil(
+        caches.keys().then((keyList) => {
+            return Promise.all(keyList.map((key) => {
+                if (key !== CACHE_NAME) {
+                    console.log('[ServiceWorker] Removing old cache', key);
+                    return caches.delete(key);
+                }
+            }));
+        })
+    );
+
+    self.clients.claim();
+});
+
+self.addEventListener('fetch', (evt) => {
+    console.log('[ServiceWorker] Fetch', evt.request.url);
+    // Add fetch event handler here.
+    if (evt.request.mode !== 'navigate') {
+        // Not a page navigation, bail.
+        return;
+    }
+    evt.respondWith(
+        fetch(evt.request)
+            .catch(() => {
+                return caches.open(CACHE_NAME)
+                    .then((cache) => {
+                        return cache.match('offline.html');
+                    });
+            })
+    );
+});
