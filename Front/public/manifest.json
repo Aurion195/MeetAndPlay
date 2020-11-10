@@ -4,7 +4,7 @@
     "display": "standalone",
     "Scope": "/",
     "orientation" : "portrait",
-    "start_url" : "/index.html",
+    "start_url" : "/",
     "background_color": "#fff",
     "theme_color": "#fff",
     "lang": "fr",
