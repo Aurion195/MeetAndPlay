@@ -3,9 +3,9 @@
 -->
 
 <script>
+	import { navigate } from "svelte-routing";
 	import { fetchPost } from "../Service/helper";
-	import { isLogged } from "../store.js"
-	import { navigate } from "svelte-routing"
+	
 	let values = {} ;
 	function update() {
 		sessionStorage.setItem("MeetAndPlay", '1');
@@ -17,7 +17,7 @@
 			if(res.statusText === "OK") {
 				update();
 				alert("Vous vous êtes connecté");
-				
+				navigate("/", {replace: true}) ;
 			}
 			else if(res.statusText === "KO") {
 				alert("Vous n'avez pas rentrer le bon idientifiant")

@@ -4,7 +4,6 @@
 -->
 <script>
 	import { Router, Link, Route, navigate } from "svelte-routing";
-	import { isLogged } from "../store.js"
 
 	document.addEventListener('DOMContentLoaded', function() {
 		var elems = document.querySelectorAll('.sidenav');

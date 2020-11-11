@@ -1,4 +1,5 @@
 <script>
+	import { navigate } from "svelte-routing";
 	import Carousel from '@beyonk/svelte-carousel'
 	import { ChevronLeftIcon, ChevronRightIcon } from 'svelte-feather-icons'
 
@@ -20,7 +21,7 @@
 	//Dés que lon va changer de photo dans le caroussel, on va mettre à jour les données
 	function changed (event) {
 		getData(event.detail.currentSlide) ;
-    }
+	}
 
 	const fetchImage = (async () => {
 		const response = await fetch('http://localhost:5000/getallevent')
@@ -33,6 +34,9 @@
 
 		return  [... event]
 	})()
+
+	let logged = sessionStorage.getItem("MeetAndPlay");
+	let display = (logged == 1 ? true : false) ;
 </script>
 
 
@@ -59,9 +63,9 @@
 			</span>
 		</Carousel>
 	</div>
-	<div class="button">
-		<a onclick="alerte()" href="/" class="waves-effect waves-light btn">S'inscrire</a>
-	</div>
+	<button disabled={!display} onclick="alerte()">
+		<p hreh="/">S'inscrire</p>
+	</button>
 	<script>
 		function alerte() {
 			alert("Votre inscription est en cour merci pour votre confiance") ;
