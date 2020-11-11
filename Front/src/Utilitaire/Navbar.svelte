@@ -4,7 +4,7 @@
 -->
 <script>
 	import { Router, Link, Route } from "svelte-routing";
-	
+	import {isLogged} from "../store.js"
 	document.addEventListener('DOMContentLoaded', function() {
 		var elems = document.querySelectorAll('.sidenav');
 		var instances = M.Sidenav.init(elems);
@@ -15,7 +15,6 @@
 		var instances = M.Dropdown.init(elems);
 	});
 
-	export let isLogged ;
 </script>
 
 <nav>
@@ -40,7 +39,7 @@
 				Si l'utilisateur est connecté on affiche pas le lien pour
 				se connecter et s'inscrire
 			-->
-			{#if !isLogged}
+			{#if !$isLogged}
 				<Link to="/Login">
 					<li>
 						<a>Se connecter</a>
@@ -57,7 +56,7 @@
 				Si l'utilisateur est connecté on affiche uniquement le lien 
 				pour se logout
 			-->
-			{#if isLogged}
+			{#if $isLogged}
 				<Link to="/Logout">
 					<li>
 						<a>Se deconnecter</a>
@@ -76,12 +75,12 @@
 </nav>
 
 <ul class="sidenav" id="mobile-demo">
-	{#if !isLogged}
+	{#if !$isLogged}
 		<Link to="/Login"><li><a href="/Login">Se connecter</a></li></Link>
 		<Link to="/Inscription"><li><a href="#!">S'inscrire</a></li></Link>
 	{/if}
 
-	{#if isLogged}
+	{#if $isLogged}
 		<Link to="/Logout"><li><a href="#!">Se deconnecter</a></li></Link>
 	{/if}
 	<li class="divider" tabindex="-1"></li>

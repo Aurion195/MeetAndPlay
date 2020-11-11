@@ -6,7 +6,9 @@ import json
 import dataset
 from flask_cors import CORS,cross_origin
 from flask.helpers import flash
-from passlib.hash import sha256_crypt 
+from passlib.hash import sha256_crypt
+import sqlite3
+
 app = Flask(__name__)
 cors = CORS(app)#, resources={r"/*": {"origins": "*"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -115,18 +117,21 @@ def login():
         user = request.get_json()
         username = user['username']
         password = user['password']
-        usernamedata = usersTable.find_one(usename=username)
-
-        if usernamedata is None:
-            return jsonify("status : KO , error : User no found"), 404
+        usernamedata = None
+        con = sqlite3.connect('../database/database.sqlite')
+        cursor = con.cursor()
+        userData =  cursor.execute('SELECT password FROM Users WHERE username = ? ', [username])
+        result = cursor.fetchone()
+        passwordData = result[0]
+        if userData is None:
+            return jsonify({"status": "KO" , "error" : "User no found"}), 405
         else:
-                if (password == usernamedata["password"]):
-                    session['log'] = True
+                if (password == passwordData):
                     return jsonify({"status" : "OK", "message" : "Logged in successfully"}), 200
                 else:
                     return jsonify({"status" : "KO", "message" : "Wrong password"}), 204
     else:
-        return jsonify({"status":"KO", "message":"error"}),404
+        return jsonify({"status":"KO", "message":"error"}),405
 
 @app.route('/getallevent', methods=['GET'])
 def api_events():

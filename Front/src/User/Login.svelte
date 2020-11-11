@@ -3,7 +3,7 @@
 -->
 
 <script>
-import { fetchPost } from "../Service/helper";
+	import { fetchPost } from "../Service/helper";
 
 
 	let values = {} ;
@@ -14,6 +14,9 @@ import { fetchPost } from "../Service/helper";
 			console.log(res)
 			if(res.statusText === "OK") {
 				alert("Vous vous êtes connecté");
+			}
+			else if(res.statusText === "KO") {
+				alert("Vous n'avez pas rentrer le bon idientifiant")
 			}
 			else {
 				alert("Vous n'avez pas réussi à vous connecter");
