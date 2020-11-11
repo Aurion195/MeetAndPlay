@@ -12,10 +12,9 @@
 	import ButtonAchat from "./Home/ButtonAchat.svelte" ;
 	import ButtonProfil from "./Home/ButtonProfil.svelte";
 	import SelectionProfil from "./Profil/SelectionProfil.svelte";
-import Register from "./User/Register.svelte";
-
+	import Register from "./User/Register.svelte";
+	
 	export let url = "";
-	export let session ;
 	export const enshureSession = redirectGuard("/login", () => !session);
 </script>
 

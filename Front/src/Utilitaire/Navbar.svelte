@@ -3,8 +3,9 @@
 	La navbar de l'écran d'accueil
 -->
 <script>
-	import { Router, Link, Route } from "svelte-routing";
-	import {isLogged} from "../store.js"
+	import { Router, Link, Route, navigate } from "svelte-routing";
+	import { isLogged } from "../store.js"
+
 	document.addEventListener('DOMContentLoaded', function() {
 		var elems = document.querySelectorAll('.sidenav');
 		var instances = M.Sidenav.init(elems);
@@ -14,7 +15,13 @@
 		var elems = document.querySelectorAll('.dropdown-trigger');
 		var instances = M.Dropdown.init(elems);
 	});
-
+	
+	let logged = sessionStorage.getItem("MeetAndPlay");
+	
+	function logout() {
+		sessionStorage.removeItem("MeetAndPlay");
+		logged = sessionStorage.getItem("MeetAndPlay");
+	}
 </script>
 
 <nav>
@@ -36,10 +43,16 @@
 			<ul id='dropdown1' class='dropdown-content'>
 			
 			<!--
-				Si l'utilisateur est connecté on affiche pas le lien pour
-				se connecter et s'inscrire
+				Si l'utilisateur est connecté on affiche uniquement le lien 
+				pour se logout
 			-->
-			{#if !$isLogged}
+			{#if logged == 1}
+				<Link to="/Logout">
+					<li>
+						<a on:click={logout}>Se deconnecter</a>
+					</li>
+				</Link>
+			{:else}
 				<Link to="/Login">
 					<li>
 						<a>Se connecter</a>
@@ -48,18 +61,6 @@
 				<Link to="/Inscription">
 					<li>
 						<a>S'inscrire</a>
-					</li>
-				</Link>
-			{/if}
-			
-			<!--
-				Si l'utilisateur est connecté on affiche uniquement le lien 
-				pour se logout
-			-->
-			{#if $isLogged}
-				<Link to="/Logout">
-					<li>
-						<a>Se deconnecter</a>
 					</li>
 				</Link>
 			{/if}
@@ -75,13 +76,11 @@
 </nav>
 
 <ul class="sidenav" id="mobile-demo">
-	{#if !$isLogged}
+	{#if logged == 1}
+		<li><a on:click={logout}>Se deconnecter</a></li>
+	{:else}
 		<Link to="/Login"><li><a href="/Login">Se connecter</a></li></Link>
 		<Link to="/Inscription"><li><a href="#!">S'inscrire</a></li></Link>
-	{/if}
-
-	{#if $isLogged}
-		<Link to="/Logout"><li><a href="#!">Se deconnecter</a></li></Link>
 	{/if}
 	<li class="divider" tabindex="-1"></li>
 	<li><a href="sass.html">Mon Profil</a></li>

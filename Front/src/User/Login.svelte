@@ -4,16 +4,20 @@
 
 <script>
 	import { fetchPost } from "../Service/helper";
-
-
+	import { isLogged } from "../store.js"
+	import { navigate } from "svelte-routing"
 	let values = {} ;
+	function update() {
+		sessionStorage.setItem("MeetAndPlay", '1');
+	}
 
 	const loginUser = (() => {
 		fetchPost("http://localhost:5000/login", values)
 		.then(res => {
-			console.log(res)
 			if(res.statusText === "OK") {
+				update();
 				alert("Vous vous êtes connecté");
+				
 			}
 			else if(res.statusText === "KO") {
 				alert("Vous n'avez pas rentrer le bon idientifiant")
