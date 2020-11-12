@@ -19,38 +19,66 @@ eventsTable = db['events']
 usersTable = db['Users']
 
 
-def build_preflight_response():
-    response = make_response()
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    response.headers.add('Access-Control-Allow-Headers', "*")
-    response.headers.add('Access-Control-Allow-Methods', "*")
-    return response
-    
-def build_actual_response(response):
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response
+def fetch_db(event_id):
+    """
+    get element event by id
 
-def fetch_db(event_id):  # Each book scnerio
+    Args:
+        event_id ([string]): [id of the element]
+
+    Returns:
+        [row]: [return the row where the id is found]
+    """
     return eventsTable.find_one(id=event_id)
 
 
 def fetch_db_all():
+    """
+    Get all event in the table
+
+    Returns:
+        [list]: [list of event ]
+    """
     events = []
     for event in eventsTable:
         events.append(event)
     return events
 
 
-def fetch_User_db(user_id):  # Each book scnerio
+def fetch_User_db(user_id):
+    """
+    get one user by id
+
+    Args:
+        user_id ([string]): [user's id]
+
+    Returns:
+        [row]: [return the row where the id is found]
+    """
     return usersTable.find_one(id=user_id)
 
-def deleteUser_db(user_id):  # Each book scnerio
+def deleteUser_db(user_id):
+    """
+    delete user by id
+
+    Args:
+        user_id ([string]): [user's id]
+
+    Returns:
+        [bool]: [True : user deleted , False : user not deleted]
+    """
     if usersTable.delete(id=user_id):
             return True
     else:
             return False
 
 def fetch_User_db_all():
+    """
+    get all users
+
+    Returns:
+        [list]: [list of all users in the database]
+    """
     users = []
     for user in usersTable:
         users.append(user)
@@ -58,10 +86,18 @@ def fetch_User_db_all():
 
 
 def add_user(newuser):
+    """
+    add an user to the database
+
+    Args:
+        newuser ([dict]): [new user]
+
+    Returns:
+        [bool]: [True : user added, False : user not added]
+    """
     if usersTable.find_one(username=newuser):
         return False
     else:
-         
         result = db.execute('INSERT INTO Users (prenom ,nom,username,password,tel,mail,avatar,adresse,age ,jeu_favoris,activité_recente,nombre_victoire ,note ,niveau) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)',
                     (
                     newuser['username'],
@@ -81,12 +117,17 @@ def add_user(newuser):
                     )
                 )
         return result
-    
-        
+
 
 @app.route('/register', methods=['POST'])
 @cross_origin(origin='*',headers=['Content-Type','Authorization'])
 def register():
+    """
+    Register route
+
+    Returns:
+        [json]: ['Status': "OK"  , "status" : "KO"]
+    """
     if request.method == 'POST':
         newuser=request.get_json()
         tmp = usersTable.insert(dict(
@@ -113,6 +154,14 @@ def register():
 
 @app.route('/login', methods=['POST'])
 def login():
+    """
+    login route
+
+    Returns:
+        [json]: ["status" : "OK", "message" : "Logged in successfully" => 200,
+                 "status" : "KO", "message" : "Wrong password" => 204,
+                "status": "KO" , "error" : "User no found" => 405]
+    """
     if request.method == 'POST':
         user = request.get_json()
         username = user['username']
@@ -135,6 +184,12 @@ def login():
 
 @app.route('/getallevent', methods=['GET'])
 def api_events():
+    """
+    get all event route
+
+    Returns:
+        [response]: [list of all event find in the database]
+    """
     if request.method == 'GET':
         return make_response(jsonify(fetch_db_all()), 200)
 
@@ -142,6 +197,16 @@ def api_events():
 
 @app.route('/deleteUser/<user_id>', methods=['GET'])
 def deleteUser(user_id):
+    """
+    delete user route
+
+    Args:
+        user_id ([str]): [Id to delete]
+
+    Returns:
+        [response]: [status : OK, message : Deleted successful => 200
+                 status : KO, message : Deleted not successful => 400]
+    """
     if request.method == 'GET':
         if deleteUser_db(user_id):
             return make_response(jsonify("status : OK, message : Deleted successful"), 200)
@@ -153,6 +218,16 @@ def deleteUser(user_id):
 
 @app.route('/geteventbyid/<event_id>', methods=['GET'])
 def api_each_event(event_id):
+    """
+    Get event by id route
+
+
+    Args:
+        event_id ([str]): [id to the we want]
+
+    Returns:
+        [response]: [even of the id given]
+    """
     if request.method == 'GET':
         event_obj = fetch_db(event_id)
         if event_obj:
@@ -163,12 +238,27 @@ def api_each_event(event_id):
 
 @app.route('/getallusers', methods=['GET'])
 def api_users():
+    """
+    get all users route
+
+    Returns:
+        [response]: [list of all users found]
+    """
     if request.method == 'GET':
         return make_response(jsonify(fetch_User_db_all()), 200)
 
 
 @app.route('/getuserbyid/<user_id>', methods=['GET'])
 def api_each_user(user_id):
+    """
+    get user by id route
+
+    Args:
+        user_id ([str]): [id of the user]
+
+    Returns:
+        [response]: [user of the id given]
+    """
     if request.method == 'GET':
         user_obj = fetch_User_db(user_id)
         if user_obj:
@@ -178,3 +268,4 @@ def api_each_user(user_id):
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=os.getenv('PORT'))
+    
