@@ -44,10 +44,14 @@
 		<SelectionProfil />
 	</Route>
 
+	<!--
+		Route pour s'inscrire
+	-->
 	<Route path="/Inscription" >
 		<NavbarBack />
 		<Register />
 	</Route>
+	
 	<!--
 		Route pour la page d'acceuil
 	-->

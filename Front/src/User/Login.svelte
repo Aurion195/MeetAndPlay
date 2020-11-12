@@ -3,21 +3,23 @@
 -->
 
 <script>
-	import { navigate } from "svelte-routing";
 	import { fetchPost } from "../Service/helper";
 	
+	//Déclaration des valeurs
 	let values = {} ;
+
+	//Permet de mettre la valeur du connecté dans le session storage
 	function update() {
 		sessionStorage.setItem("MeetAndPlay", '1');
 	}
 
+	//Permet de se connecter via un fetch post afin de cacher les valeurs
 	const loginUser = (() => {
 		fetchPost("http://localhost:5000/login", values)
 		.then(res => {
 			if(res.statusText === "OK") {
 				update();
 				alert("Vous vous êtes connecté");
-				navigate("/", {replace: true}) ;
 			}
 			else if(res.statusText === "KO") {
 				alert("Vous n'avez pas rentrer le bon idientifiant")
@@ -53,7 +55,7 @@
 				bind:value={values.password}/>
 			</div>
 		
-		<button class="btn waves-effect waves-light" type="submit" name="action">Connexion
+		<button class="btn waves-effect waves-light" type="submit" name="action" href="/">Connexion
 			<i class="material-icons right">send</i>
 		</button>
 	</form>

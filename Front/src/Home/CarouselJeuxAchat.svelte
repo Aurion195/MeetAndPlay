@@ -6,6 +6,7 @@
 	import { ChevronLeftIcon, ChevronRightIcon } from 'svelte-feather-icons'
 	let carousels = {perPage: 1}
 	
+	//Permet de changer d'image dans le caroussel
 	function changed (event) {
 		console.log(event.detail.currentSlide)
         }

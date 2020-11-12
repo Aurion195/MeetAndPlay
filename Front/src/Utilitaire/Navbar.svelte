@@ -10,11 +10,11 @@
 		var instances = M.Sidenav.init(elems);
 	});
 
-	document.addEventListener('DOMContentLoaded', function() {
-		var elems = document.querySelectorAll('.dropdown-trigger');
-		var instances = M.Dropdown.init(elems);
-	});
-	
+		document.addEventListener('DOMContentLoaded', function() {
+			var elems = document.querySelectorAll('.dropdown-trigger');
+			var instances = M.Dropdown.init(elems);
+		});
+
 	let logged = sessionStorage.getItem("MeetAndPlay");
 	
 	function logout() {
@@ -46,11 +46,9 @@
 				pour se logout
 			-->
 			{#if logged == 1}
-				<Link to="/Logout">
-					<li>
-						<a on:click={logout}>Se deconnecter</a>
-					</li>
-				</Link>
+				<li>
+					<a on:click={logout}>Se deconnecter</a>
+				</li>
 			{:else}
 				<Link to="/Login">
 					<li>
